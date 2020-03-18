@@ -19,27 +19,27 @@ def tutorials(request):
         'urls': get_url_list(request),
         'title': 'Tutorials',
     }
-    return render(request, 'main_app/user_profile.html' ,context)
+    return render(request, 'main_app/tutorials.html' ,context)
 
 def new_tutorial(request):
     context = {
         'urls': get_url_list(request),
         'title': 'Add Tutorial',
     }
-    return render(request, 'main_app/user_profile.html' ,context)
+    return render(request, 'main_app/new_tutorial.html' ,context)
 def categories(request):
     context = {
         'urls': get_url_list(request),
         'title': 'Categories',
     }
-    return render(request, 'main_app/user_profile.html' , context)
+    return render(request, 'main_app/categories.html' , context)
 
 def about(request):
     context = {
         'urls': get_url_list(request),
         'title': 'About',
     }
-    return render(request, 'main_app/user_profile.html' ,context)
+    return render(request, 'main_app/about.html' ,context)
 
 
 
