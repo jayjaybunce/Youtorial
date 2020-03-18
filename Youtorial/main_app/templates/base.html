@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
+</head>
+{% comment %} <i class="material-icons">cloud</i>Logo {% endcomment %}
+<body class="grey lighten-4">
+    <nav class="nav-wrapper cyan darken-1">
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo"><img id="logo-img"src="{% static 'images/logo.png'%}"></a>   
+            <ul class="hide-on-med-and-down right">               
+                <li>    
+                   <div class="center row">
+                      <div class="col s12 " >
+                        <div class="row" id="topbarsearch">
+                          <div class="input-field col s6 s12">
+                            <i class="material-icons prefix">search</i>
+                            <input type="text" placeholder="search" id="autocomplete-input" class="autocomplete white-text" >
+                            </div>
+                          </div>
+                        </div>
+                      </div>          
+                  </li>                     
+                
+        <li class="active"><a class="btn-floating cyan darken-2"href="/"><i class="medium material-icons">home</i></a></li>
+        <li><a class="btn-floating cyan darken-2" href="add"><i class="medium material-icons">add_box</i></a></li>
+        <li><a class="btn-floating cyan darken-2" href="user/"><i class="medium material-icons">account_box</i></a></li>
+        <li><a class="btn-floating pulse cyan darken-3"href="categories/"><i class="medium material-icons pulse">apps</i></a></li>
+        <li><a class="btn-floating cyan darken-3"href="about/"><i class="medium material-icons pulse">info</i></a></li>
+            </ul>
+        </div>
+      </nav>
+      <nav class="nav-wrapper cyan lighten-1">
+      <div class="col s12">
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <a href="#!" class="center breadcrumb">Home</a>
+        <a href="#!" class="breadcrumb"></a>
+        
+      </div>
+      </nav>
+    <main class="container">
+    {% block content %}
+
+    {% endblock %}
+    </main>
+    <footer class="page-footer cyan accent-3">
+        
+        <div class="right">All Rights Reserved, &copy; 2020 Youtorial &nbsp;</div>
+    </footer>
+</body>
+</html>
