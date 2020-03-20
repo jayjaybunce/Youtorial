@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
-
+from tinymce.widgets import TinyMCE
 
 
 
@@ -20,6 +20,10 @@ class Tutorial(models.Model):
     language = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    formfield_overrides = {
+        models.TextField: {'widget': TinyMCE()}
+    }
+
     def __save__(self, *args, **kwargs):
         if self.published == None:
             self.published = timezone.now()
@@ -43,6 +47,10 @@ class Photo(models.Model):
 class Video(models.Model):
     url = models.CharField(max_length=200,default='')
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
+
+
+
+
 
 
     

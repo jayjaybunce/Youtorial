@@ -4,6 +4,7 @@ import uuid
 import boto3
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from .forms import TutorialForm
 
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -32,9 +33,13 @@ def tutorials(request):
     return render(request, 'main_app/tutorials.html' ,context)
 
 def new_tutorial(request):
+    if request.method == 'POST':
+        print(request.POST)
+    form = TutorialForm()
     context = {
         'urls': get_url_list(request),
         'title': 'Add Tutorial',
+        'form': form
     }
     return render(request, 'main_app/new_tutorial.html' ,context)
 def categories(request):
@@ -70,6 +75,11 @@ def sign_up(request):
         'error_message_signup': error_message_signup,
     }
     return redirect('homepage')
+
+
+
+
+
     
     
 
