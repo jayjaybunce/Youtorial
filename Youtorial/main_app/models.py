@@ -1,15 +1,22 @@
+
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+
+
+
+
 class Category(models.Model):
     name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
 
 class Tutorial(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     rating = models.IntegerField()
-    published = models.DateTimeField()
+    published = models.DateTimeField(auto_now_add=True, blank=True)
     language = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -30,10 +37,12 @@ class Comment(models.Model):
         return f'{self.user}, {self.content}'
 
 class Photo(models.Model):
+    url = models.CharField(max_length=200,default='')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Video(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    url = models.CharField(max_length=200,default='')
+    tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
 
 
 

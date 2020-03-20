@@ -41,8 +41,21 @@ def about(request):
     }
     return render(request, 'main_app/about.html' ,context)
 
+def sign_up(request):
+    username = request.POST['username']
+    email = request.POST['email']
+    first_name = request.post['first_name']
+    last_name = request.post['last_name']
+    password = request.POST['password']
+    password_confirm = request.POST['password_confirm']
 
 
+
+
+
+def login(request):
+    username = request.POST['username']
+    password = request.POST['password']
 
 
 
