@@ -1,8 +1,13 @@
 from django.shortcuts import render, redirect
 from .utils import get_url_list
+import uuid
+import boto3
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserForm
+
+
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'youtorial'
 
 
 # Create your views here.
