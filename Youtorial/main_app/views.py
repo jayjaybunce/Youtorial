@@ -1,5 +1,10 @@
 from django.shortcuts import render
 from .utils import get_url_list
+import uuid
+import boto3
+
+S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+BUCKET = 'youtorial'
 
 # Create your views here.
 def homepage(request):
