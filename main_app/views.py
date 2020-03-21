@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate
 from .utils import get_url_list
 import uuid
 import boto3
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from .models import Photo
+from django.contrib.auth.models import User
 
 
-S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
+S3_BASE_URL = 'https://s3-us-east-2.amazonaws.com/'
 BUCKET = 'youtorial'
 
 
@@ -17,12 +19,16 @@ def homepage(request):
         'title': 'Home',
     }
     return render(request, 'main_app/index.html', context)
+
 def user_profile(request):
+    photo = Photo.objects.get(user=request.user)
     context = {
         'urls': get_url_list(request),
         'title': 'User',
+        'photo': photo,
     }
     return render(request, 'main_app/user_profile.html' ,context)
+
 def tutorials(request):
     
     context = {
@@ -37,6 +43,7 @@ def new_tutorial(request):
         'title': 'Add Tutorial',
     }
     return render(request, 'main_app/new_tutorial.html' ,context)
+
 def categories(request):
     context = {
         'urls': get_url_list(request),
@@ -70,6 +77,23 @@ def sign_up(request):
         'error_message_signup': error_message_signup,
     }
     return redirect('homepage')
+
+def add_photo(request, user_id):
+    photo_file = request.FILES.get('photo-file', None)
+    photo = Photo.objects.get(user=request.user)
+    if photo:
+        photo.delete()
+    if photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            photo = Photo(url=url, user_id=user_id)
+            photo.save()
+        except:
+            print('An error occured uploading file e to S3')
+    return redirect('user_profile')
     
     
 
