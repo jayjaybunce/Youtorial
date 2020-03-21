@@ -20,6 +20,7 @@ class Tutorial(models.Model):
     language = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.PROTECT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video_url = models.CharField(max_length=200,null=True,default='')
     formfield_overrides = {
         models.TextField: {'widget': TinyMCE()}
     }

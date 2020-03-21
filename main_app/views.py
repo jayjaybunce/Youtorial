@@ -49,10 +49,26 @@ def tutorials(request):
 
 def new_tutorial(request):
     categories = Category.objects.all()
+    
     if request.method == 'POST':
+        video_file = request.FILES.get('video_url')
+        if video_file:
+            s3 = boto3.client('s3')
+            key = uuid.uuid4().hex[:6] + video_file.name[video_file.name.rfind('.'):]
+            try:
+                s3.upload_fileobj(video_file, BUCKET, key)
+                url = f"{S3_BASE_URL}{BUCKET}/{key}"
+                
+                # video = Video(url=url, tutorial_id=tutorial_id)
+                # video.save()
+            except:
+                print('An error occured uploding file e to S3')
+    # return redirect('tutorials')
+        
         tut_form = TutorialForm(request.POST)
         tut = tut_form.save(commit=False)
         tut.user = request.user
+        tut.video_url = url
         if tut_form.is_valid():
             tut_form.save()
             return redirect('homepage')
@@ -65,6 +81,10 @@ def new_tutorial(request):
         'categories': categories,
     }
     return render(request, 'main_app/new_tutorial.html' ,context)
+
+
+
+
 
 def categories(request):
     context = {
@@ -101,7 +121,8 @@ def sign_up(request):
     return redirect('homepage')
 
 def add_photo(request, user_id):
-    photo_file = request.FILES.get('photo-file', None)    
+    photo_file = request.FILES.get('photo-file', None) 
+    
     try:
         photo = Photo.objects.get(user=request.user)
     except:
