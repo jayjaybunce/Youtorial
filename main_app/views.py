@@ -1,14 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
-from .utils import get_url_list
-import uuid
-import boto3
+from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from .utils import get_url_list
 from .forms import TutorialForm
-from .models import Photo, Category, Tutorial
-from django.contrib.auth.models import User
+from .models import Photo, Category, Tutorial, Video
+
+import uuid
+import boto3
+
+
 
 
 
@@ -118,6 +121,19 @@ def add_photo(request, user_id):
     return redirect('user_profile')
 
     
+def add_video(request, tutorial_id):
+    video_file = request.FILES.get('video-file', None)
+    if video_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + video_file.name[video_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(video_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            video = Video(url=url, tutorial_id=tutorial_id)
+            video.save()
+        except:
+            print('An error occured uploding file e to S3')
+    return redirect('tutorials')
     
 
 
