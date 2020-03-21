@@ -4,7 +4,7 @@ from django.contrib.auth import login, authenticate
 from .utils import get_url_list
 import uuid
 import boto3
-from .models import Photo
+from .models import Photo, Video
 from django.contrib.auth.models import User
 
 
@@ -101,6 +101,19 @@ def add_photo(request, user_id):
             print('An error occured uploading file e to S3')
     return redirect('user_profile')
     
+def add_video(request, tutorial_id):
+    video_file = request.FILES.get('video-file', None)
+    if video_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + video_file.name[video_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(video_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            video = Video(url=url, tutorial_id=tutorial_id)
+            video.save()
+        except:
+            print('An error occured uploding file e to S3')
+    return redirect('tutorials')
     
 
 

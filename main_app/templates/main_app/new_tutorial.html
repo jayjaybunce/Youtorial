@@ -2,5 +2,14 @@
 
 
 {% block content %}
-    New tutorial here
+    <div class="container">
+        <div class="row">
+            <div class="card grey white-text">
+                <h3>Upload Video</h3>
+                <form action="{% url 'add_video' tutorial.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text">
+                    {% csrf_token %}
+                    <input type="file" name="video-file">
+                </form>
+            </div>
+        </div>
 {% endblock  %}
