@@ -21,7 +21,10 @@ def homepage(request):
     return render(request, 'main_app/index.html', context)
 
 def user_profile(request):
-    photo = Photo.objects.get(user=request.user)
+    try:
+        photo = Photo.objects.get(user=request.user)
+    except:
+        photo = None
     context = {
         'urls': get_url_list(request),
         'title': 'User',
@@ -79,8 +82,11 @@ def sign_up(request):
     return redirect('homepage')
 
 def add_photo(request, user_id):
-    photo_file = request.FILES.get('photo-file', None)
-    photo = Photo.objects.get(user=request.user)
+    photo_file = request.FILES.get('photo-file', None)    
+    try:
+        photo = Photo.objects.get(user=request.user)
+    except:
+        photo = None
     if photo:
         photo.delete()
     if photo_file:
