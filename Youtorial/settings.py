@@ -129,8 +129,8 @@ TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
 TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tinymce")
 
 TINYMCE_DEFAULT_CONFIG = {
-    'height' : 300,
-    'plugins': "image,imagetools,media,codesample,link,code",
+    'height' : 500,
+    'plugins': "image,imagetools,codesample,link,code",
     'cleanup_on_startup': True,
     'menubar': False,
     'toolbar': "styleselect |undo redo | bold italic | alignleft aligncenter alignright | link image media codesample code",

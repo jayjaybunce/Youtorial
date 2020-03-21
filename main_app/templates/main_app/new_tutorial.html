@@ -2,17 +2,26 @@
 
 
 {% block content %}
-    
+    {% load static %}
     New tutorial here
+    <br>
+    <br>
+    <br>
     <form action="" method="POST">
+    {% csrf_token %}
+   
     {{ form.as_p}}
+
     <input type="submit" class="btn">
     </form>
+    <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
     <script>
     tinyMCE.init({
     mode: "textareas",
-    theme: "advanced",
-    plugins: "spellchecker,directionality,paste,searchreplace",
+    height: 800,
+    plugins: "code bbcode autoresize",
+    statusbar: false,
+    toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
     language: "{{ language }}",
     directionality: "{{ directionality }}",
     spellchecker_languages : "{{ spellchecker_languages }}",

@@ -15,7 +15,7 @@ class Category(models.Model):
 class Tutorial(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    rating = models.IntegerField()
+    rating = models.IntegerField(null=True)
     published = models.DateTimeField(auto_now_add=True, blank=True)
     language = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.PROTECT)

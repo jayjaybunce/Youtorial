@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .utils import get_url_list
 import uuid
 import boto3
+from .models import Category, Tutorial
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .forms import TutorialForm
@@ -33,13 +34,21 @@ def tutorials(request):
     return render(request, 'main_app/tutorials.html' ,context)
 
 def new_tutorial(request):
+    categories = Category.objects.all()
     if request.method == 'POST':
-        print(request.POST)
+        tut_form = TutorialForm(request.POST)
+        tut = tut_form.save(commit=False)
+        tut.user = request.user
+        if tut_form.is_valid():
+            tut_form.save()
+            return redirect('homepage')
+
     form = TutorialForm()
     context = {
         'urls': get_url_list(request),
         'title': 'Add Tutorial',
-        'form': form
+        'form': form,
+        'categories': categories,
     }
     return render(request, 'main_app/new_tutorial.html' ,context)
 def categories(request):
