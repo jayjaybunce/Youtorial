@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'tinymce',
     'main_app',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -122,3 +123,19 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'homepage'
 LOGOUT_REDIRECT_URL = 'homepage'
+
+
+TINYMCE_JS_URL = os.path.join(STATIC_URL, "js/tinymce/tinymce.min.js")
+TINYMCE_JS_ROOT = os.path.join(STATIC_URL, "js/tinymce")
+
+TINYMCE_DEFAULT_CONFIG = {
+    'height' : 500,
+    'plugins': "image,imagetools,codesample,link,code",
+    'cleanup_on_startup': True,
+    'menubar': False,
+    'toolbar': "styleselect |undo redo | bold italic | alignleft aligncenter alignright | link image media codesample code",
+    'image_caption': True,
+    'image_advtab': True,
+    'custom_undo_redo_levels': 10,
+    'file_browser_callback' : "myFileBrowser"
+}

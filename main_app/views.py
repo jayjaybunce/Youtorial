@@ -1,11 +1,18 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
 from .utils import get_url_list
+from .forms import TutorialForm
+from .models import Photo, Category, Tutorial, Video
+
 import uuid
 import boto3
-from .models import Photo, Video
-from django.contrib.auth.models import User
+
+
+
 
 
 S3_BASE_URL = 'https://s3-us-east-2.amazonaws.com/'
@@ -41,9 +48,21 @@ def tutorials(request):
     return render(request, 'main_app/tutorials.html' ,context)
 
 def new_tutorial(request):
+    categories = Category.objects.all()
+    if request.method == 'POST':
+        tut_form = TutorialForm(request.POST)
+        tut = tut_form.save(commit=False)
+        tut.user = request.user
+        if tut_form.is_valid():
+            tut_form.save()
+            return redirect('homepage')
+
+    form = TutorialForm()
     context = {
         'urls': get_url_list(request),
         'title': 'Add Tutorial',
+        'form': form,
+        'categories': categories,
     }
     return render(request, 'main_app/new_tutorial.html' ,context)
 
@@ -82,7 +101,7 @@ def sign_up(request):
     return redirect('homepage')
 
 def add_photo(request, user_id):
-    photo_file = request.FILES.get('photo-file', None)
+    photo_file = request.FILES.get('photo-file', None)    
     try:
         photo = Photo.objects.get(user=request.user)
     except:
@@ -100,6 +119,7 @@ def add_photo(request, user_id):
         except:
             print('An error occured uploading file e to S3')
     return redirect('user_profile')
+
     
 def add_video(request, tutorial_id):
     video_file = request.FILES.get('video-file', None)
