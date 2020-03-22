@@ -22,6 +22,10 @@ footer.page-footer {
     width: 200px;
 }
 
+.textwrap {
+  white-space: pre-wrap;
+}
+
 /* .profile-pic {
   padding: 20px;
 }

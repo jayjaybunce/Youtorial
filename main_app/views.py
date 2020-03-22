@@ -71,7 +71,7 @@ def new_tutorial(request):
         tut.video_url = url
         if tut_form.is_valid():
             tut_form.save()
-            return redirect('homepage')
+        return redirect(f'/tutorials/{tut.id}')
 
     form = TutorialForm()
     context = {
@@ -82,7 +82,11 @@ def new_tutorial(request):
     }
     return render(request, 'main_app/new_tutorial.html' ,context)
 
-
+def tutorial_detail(request, tutorial_id):
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    tutorial_form = TutorialForm()
+    print(f"This is the tutorial: {tutorial}")
+    return render(request, 'main_app/tutorial_detail.html', {'tutorial': tutorial, 'tutorial_form': tutorial_form})
 
 
 
