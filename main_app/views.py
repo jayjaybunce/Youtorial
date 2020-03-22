@@ -36,6 +36,7 @@ def user_profile(request):
         'urls': get_url_list(request),
         'title': 'User',
         'photo': photo,
+        'tutorials': Tutorial.objects.filter(user=request.user)
     }
     return render(request, 'main_app/user_profile.html' ,context)
 
@@ -49,7 +50,7 @@ def tutorials(request):
 
 def new_tutorial(request):
     categories = Category.objects.all()
-    
+    url = ''
     if request.method == 'POST':
         video_file = request.FILES.get('video_url')
         if video_file:
