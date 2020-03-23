@@ -47,6 +47,15 @@
       <div class="col s10">
         <div class="card grey white-text card-panel">
           <h4 class= "saved-tutorial">Saved Tutorials</h4>
+           {% for stats in stats %}
+        <div>
+            <p>{{level_status}}</p>
+            <p>{{stats}}</p>
+            <p>{{saved}}</p>
+            <p>{{user}}</p>
+            <p>{{tutorial}}</p>
+        </div>
+        {% endfor %}
         </div>
       </div>
       <div class="col s10">
