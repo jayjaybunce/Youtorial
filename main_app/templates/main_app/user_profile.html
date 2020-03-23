@@ -61,6 +61,7 @@
       <div class="col s10">
         <div class="card grey white-text card-panel inline">
           <h4 class= "created-tutorial">Created Tutorials</h4>
+          <div style="max-height: 800px; overflow: scroll">
           {% for tutorial in tutorials %}
             <div class="card black-text" style="padding: 10px">
             <div class="row">
@@ -75,12 +76,15 @@
               <br>
 
               <a href="{% url 'edit_tutorial' tutorial.id %}"><button class="btn right tooltipped" data-position="right" data-tooltip="Edit"><i class="material-icons">edit</i></button></a>
+              <br>
+              <br>
+              <a href="{% url 'detail' tutorial.id %}"><button class="btn right tooltipped blue lighten-1" data-position="right" data-tooltip="View"><i class="material-icons">pageview</i></button></a>
+
               </div>
             </div>
-          
-              
             </div>
           {% endfor %}
+          </div>
         </div>
       </div>
     </div> 

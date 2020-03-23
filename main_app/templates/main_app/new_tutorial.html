@@ -5,7 +5,7 @@
 
     <div class="container">
      
-           New tutorial here
+    <h3 id="tutorial_title">Title Here</h3>
     <br>
     <br>
     <br>
@@ -23,7 +23,7 @@
     tinyMCE.init({
     mode: "textareas",
     height: 800,
-    plugins: "code bbcode autoresize",
+    plugins: "code bbcode autoresize codesample",
     statusbar: false,
     toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
     language: "{{ language }}",
@@ -31,6 +31,8 @@
     spellchecker_languages : "{{ spellchecker_languages }}",
     spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
 });
+tinymce.activeEditor.execCommand('mceCodeEditor');
+
     </script>
    
 {% endblock  %}

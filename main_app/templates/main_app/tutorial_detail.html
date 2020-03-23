@@ -2,25 +2,28 @@
 
 {% block content %}
     <h2 class="center">{{ tutorial.title }}</h2>
-    <div class="container">
-      <div class="row">
-        <div class="card">
-          <div class="col s6">
+    
+    <div class="row">
+    <div class="col s6 left" style="margin-left: -200px; width:800px">
             <div class="card-content">
-              <p>Created By: {{ tutorial.user }}</p>
+               <div class="chip">
+                  <img src="{{photo.url}}" alt="">
+                  {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
+                </div>
               <hr>
-              <p class="textwrap">Walkthrough: {{ tutorial.content }}</p>
+              <p class="textwrap">Walkthrough: {{ tutorial.content | safe}}</p>
             </div>
           </div>
-          <div class="col s6">
-            <p>Video Walkthrough</p>
-            <video width="320" height="240" controls>
-              <source src="{{ tutorial.video_url }}" type="video/mp4">
-              <source src="{{ tutorial.video_url }}" type="video/ogg">
-            Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-      </div>
+      <div class="col s6">
+              <p>Video Walkthrough</p>
+              <video width="800" height="600" controls>
+                <source src="{{ tutorial.video_url }}" type="video/mp4">
+                <source src="{{ tutorial.video_url }}" type="video/ogg">
+              Your browser does not support the video tag.
+              </video>
+            </div>
     </div>
+    <script>
+      tinymce.activeEditor.execCommand('CodeSample');
+    </script>
 {% endblock  %}
