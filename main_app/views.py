@@ -146,6 +146,43 @@ def add_photo(request, user_id):
             print('An error occured uploading file e to S3')
     return redirect('user_profile')
 
+
+def edit_tutorial(request, tutorial_id):
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    if request.method == 'POST':
+        category = Category.objects.get(id=request.POST['category'])
+        tutorial.title = request.POST['title']
+        tutorial.content = request.POST['content']
+        tutorial.language = request.POST['language']
+        tutorial.category = category
+        form = TutorialForm(request.POST)
+        if form.is_valid():
+            tutorial.save()
+            return redirect('detail', tutorial_id=tutorial_id)
+    form = TutorialForm(instance=tutorial)
+    context = {
+        'urls': get_url_list(request),
+        'form': form,
+        'tutorial': tutorial
+    }
+    return render(request, 'main_app/edit_tutorial.html', context)
+
+def delete_tutorial(request, tutorial_id):
+    Tutorial.objects.get(id=tutorial_id).delete()
+    return redirect('/')
+    
+
+
+
+
+
+
+
+
+
+
+
+
     
 # def add_video(request, tutorial_id):
 #     video_file = request.FILES.get('video-file', None)

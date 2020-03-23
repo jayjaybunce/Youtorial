@@ -60,10 +60,12 @@
                 <h6>{{ tutorial.title}}</h6>
               </div>
               <div class="col s3">
-              <button class="btn red darken-4 right tooltipped" data-position="right" data-tooltip="Delete"><i class="material-icons">delete_forever</i></button>
+              
+              <a href="{% url 'delete_tutorial' tutorial.id%}"><button class="btn red darken-4 right tooltipped" data-position="right" data-tooltip="Delete"><i class="material-icons">delete_forever</i></button>
               <br>
               <br>
-              <button class="btn right tooltipped" data-position="right" data-tooltip="Edit"><i class="material-icons">edit</i></button>
+
+              <a href="{% url 'edit_tutorial' tutorial.id %}"><button class="btn right tooltipped" data-position="right" data-tooltip="Edit"><i class="material-icons">edit</i></button></a>
               </div>
             </div>
           
