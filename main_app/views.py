@@ -6,7 +6,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .utils import get_url_list
 from .forms import TutorialForm
-from .models import Photo, Category, Tutorial, Video
+from .models import Photo, Category, Tutorial, Video, Status
 
 import uuid
 import boto3
@@ -28,6 +28,7 @@ def homepage(request):
     return render(request, 'main_app/index.html', context)
 
 def user_profile(request):
+    stats = Status.objects.all()
     try:
         photo = Photo.objects.get(user=request.user)
     except:
@@ -36,7 +37,8 @@ def user_profile(request):
         'urls': get_url_list(request),
         'title': 'User',
         'photo': photo,
-        'tutorials': Tutorial.objects.filter(user=request.user)
+        'tutorials': Tutorial.objects.filter(user=request.user),
+        'stats': stats
     }
     return render(request, 'main_app/user_profile.html' ,context)
 
@@ -145,6 +147,49 @@ def add_photo(request, user_id):
         except:
             print('An error occured uploading file e to S3')
     return redirect('user_profile')
+
+
+def edit_tutorial(request, tutorial_id):
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    if request.method == 'POST':
+        category = Category.objects.get(id=request.POST['category'])
+        tutorial.title = request.POST['title']
+        tutorial.content = request.POST['content']
+        tutorial.language = request.POST['language']
+        tutorial.category = category
+        form = TutorialForm(request.POST)
+        if form.is_valid():
+            tutorial.save()
+            return redirect('detail', tutorial_id=tutorial_id)
+    form = TutorialForm(instance=tutorial)
+    context = {
+        'urls': get_url_list(request),
+        'form': form,
+        'tutorial': tutorial
+    }
+    return render(request, 'main_app/edit_tutorial.html', context)
+
+def delete_tutorial(request, tutorial_id):
+    Tutorial.objects.get(id=tutorial_id).delete()
+    return redirect('/')
+    
+def saved_tutorials(request):
+    stats = Status.objects.all()
+    
+    context = {'stats': stats}
+    return render(request, 'main_app/saved_tutorials.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 # def add_video(request, tutorial_id):

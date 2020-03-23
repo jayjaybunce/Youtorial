@@ -35,17 +35,23 @@
                         </div>
                       </div>          
                   </li>                     
-                
-        <li class="{% if title == 'Home' %}active{% endif %}"><a class="btn-floating grey lighten-1"href="{% url 'homepage' %} "><i class="medium material-icons">home</i></a></li>
-        <li class="{% if title == 'Add Tutorial' %}active{% endif %}"><a class="btn-floating grey lighten-1" href="{% url 'new_tutorial' %}"><i class="medium material-icons">add_box</i></a></li>
-        <li  class="{% if title == 'User' %}active{% endif %}"><a class="btn-floating grey lighten-1" href="{% url 'user_profile' %}"><i class="medium material-icons">account_box</i></a></li>
-        <li class="{% if title == 'Categories' %}active{% endif %}"><a class="btn-floating grey lighten-1"href="{% url 'categories' %}"><i class="medium material-icons pulse">apps</i></a></li>
-        <li class="{% if title == 'About' %}active{% endif %}"><a class="btn-floating grey lighten-1"href="{% url 'about' %}"><i class="medium material-icons pulse">info</i></a></li>
+                     {% if user.is_authenticated %}
+                  <li><a href="accounts/logout/">Logout</a></li>
+                  <li class="{% if title == 'Add Tutorial' %}active{% endif %}"><a class="btn-floating grey lighten-1" href="{% url 'new_tutorial' %}"><i class="medium material-icons">add_box</i></a></li>
+                  <li  class="{% if title == 'User' %}active{% endif %}"><a class="btn-floating grey lighten-1" href="{% url 'user_profile' %}"><i class="medium material-icons">account_box</i></a></li>
+                {% else %}
+
+                  <li><a href="/">Login</a></li>
+                  <li><a href="/">Sign Up</a></li>
+                {% endif %}                     
+                <li class="{% if title == 'Home' %}active{% endif %}"><a class="btn-floating grey lighten-1"href="{% url 'homepage' %} "><i class="medium material-icons">home</i></a></li>
+                <li class="{% if title == 'Categories' %}active{% endif %}"><a class="btn-floating grey lighten-1"href="{% url 'categories' %}"><i class="medium material-icons pulse">apps</i></a></li>
+                <li class="{% if title == 'About' %}active{% endif %}"><a class="btn-floating grey lighten-1"href="{% url 'about' %}"><i class="medium material-icons pulse">info</i></a></li>
             </ul>
         </div>
        
       </nav>
-     <footer class="page-footer cyan darken-3">
+     <footer class="page-footer cyan lighten-1">
       <div class="center">
           <a href="#!" class="center breadcrumb" style="line-height: 35px"></a>
           {% for url in urls %}
