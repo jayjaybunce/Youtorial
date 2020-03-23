@@ -10,6 +10,9 @@
                   <img src="{{photo.url}}" alt="">
                   {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
                 </div>
+                <div class="right">
+                  <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light"><i class="material-icons">favorite</i></a>
+                </div>
               <hr>
               <p class="textwrap">Walkthrough: {{ tutorial.content | safe}}</p>
             </div>
@@ -19,7 +22,7 @@
                 <iframe width="800px" height="600px" src="{{tutorial.video_url}}">
                 </iframe>
               {% else %}
-                <video width="800" height="600" controls>
+                <video width="800" height="600" controls class="responsive-video">
                 <source src="{{ tutorial.video_url }}" type="video/mp4">
                 <source src="{{ tutorial.video_url }}" type="video/ogg">
               Your browser does not support the video tag.
@@ -36,9 +39,7 @@
                   <img src="{{photo.url}}" alt="">
                   {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
                 </div>
-                <div class="right">
-                  <a href="{% url 'save_tutorial' tutorial.id%}"><i class="material-icons">favorite</i></a>
-                </div>
+                
               <hr>
               <p class="textwrap" style="word-wrap: break-word">Walkthrough: {{ tutorial.content | safe}}</p>
             </div>
@@ -46,6 +47,6 @@
     </div>
     {% endif %}
     <script>
-      tinymce.activeEditor.execCommand('CodeSample');
+      // tinymce.activeEditor.execCommand('CodeSample');
     </script>
 {% endblock  %}

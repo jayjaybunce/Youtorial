@@ -5,14 +5,16 @@
 
     <div class="container">
      
-ial_title">Title Here</h3>
+<h3 id="tutorial_title">Title Here</h3>
     <br>
     <br>
     <br>
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p}}
-        <input type="submit" class="btn">
+        <a onclick="M.toast({html: 'Thanks For Creating A Tutorial!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+            <input type="submit" class="btn">
+        </a>
     </form>
         </div>
 
