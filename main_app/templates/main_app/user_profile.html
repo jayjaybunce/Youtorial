@@ -20,7 +20,9 @@
             {% csrf_token %}
             <input type="file" name="photo-file">
             <br><br>
-            <input type="submit" class="btn" value="Upload Photo">
+            <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+              <input type="submit" class="btn" value="Upload Photo">
+            </a>
           </form>     
       </div>
     </div>
@@ -42,12 +44,6 @@
       <div class="card grey white-text card-panel">
         <h4 class= "card-title">Completed Tutorials</h4>
       </div>
-<<<<<<< HEAD
-    </div>
-    <div class="col s10 saved-tutorial">
-      <div class="card grey white-text card-panel">
-        <h4 class= "card-title">Saved Tutorials</h4>
-=======
       <div class="col s10">
         <div class="card grey white-text card-panel">
           <h4 class= "saved-tutorial">Saved Tutorials</h4>
@@ -61,7 +57,6 @@
         </div>
         {% endfor %}
         </div>
->>>>>>> a487059c852256aea33f4f09dbae4010e26a118d
       </div>
     </div>
     <div class="col s10 created-tutorial">

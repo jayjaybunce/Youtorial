@@ -6,31 +6,33 @@
     <div class="container">
      
            New tutorial here
-    <br>
-    <br>
-    <br>
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p}}
-        <input type="submit" class="btn">
-    </form>
-        </div>
+        <br>
+        <br>
+        <br>
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <a onclick="M.toast({html: 'Thanks For Creating A New Tutorial!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+                <input type="submit" class="btn">
+            </a>
+        </form>
+    </div>
 
     {% load static %}
    
     <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
     <script>
     tinyMCE.init({
-    mode: "textareas",
-    height: 800,
-    plugins: "code bbcode autoresize",
-    statusbar: false,
-    toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-    language: "{{ language }}",
-    directionality: "{{ directionality }}",
-    spellchecker_languages : "{{ spellchecker_languages }}",
-    spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
-});
+        mode: "textareas",
+        height: 800,
+        plugins: "code bbcode autoresize",
+        statusbar: false,
+        toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
+        language: "{{ language }}",
+        directionality: "{{ directionality }}",
+        spellchecker_languages : "{{ spellchecker_languages }}",
+        spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
+    });
     </script>
    
 {% endblock  %}

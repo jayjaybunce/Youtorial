@@ -36,7 +36,7 @@
                       </div>          
                   </li>                     
                      {% if user.is_authenticated %}
-                  <li><a href="accounts/logout/">Logout</a></li>
+                  <li><a href="/accounts/logout/">Logout</a></li>
                   <li class="{% if title == 'Add Tutorial' %}active{% endif %}"><a class="btn-floating grey lighten-1" href="{% url 'new_tutorial' %}"><i class="medium material-icons">add_box</i></a></li>
                   <li  class="{% if title == 'User' %}active{% endif %}"><a class="btn-floating grey lighten-1" href="{% url 'user_profile' %}"><i class="medium material-icons">account_box</i></a></li>
                 {% else %}

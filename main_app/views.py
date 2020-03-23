@@ -42,11 +42,21 @@ def user_profile(request):
     }
     return render(request, 'main_app/user_profile.html' ,context)
 
-def tutorials(request):
-    
+def tutorials(request, category_name):
+    category = Category.objects.get(name=category_name)
+    tutorials = Tutorial.objects.filter(category=category.id)
+    photo = Photo.objects.get(user_id=request.user.id)
+
+    for t in tutorials:
+        p = Photo.objects.get(user_id=t.user.id)
+        t.user_url = p.url
+
     context = {
         'urls': get_url_list(request),
-        'title': 'Tutorials',
+        'title': 'title',
+        'tutorials': tutorials,
+        'category': category,
+        'photo': photo,
     }
     return render(request, 'main_app/tutorials.html' ,context)
 
