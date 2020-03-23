@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'Youtorial.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'youtorial',
+        'NAME': 'youtorial',    
     }
 }
 
