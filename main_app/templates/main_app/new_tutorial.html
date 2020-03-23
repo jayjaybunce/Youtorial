@@ -5,24 +5,24 @@
 
     <div class="container">
      
-           New tutorial here
-        <br>
-        <br>
-        <br>
-        <form action="" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p}}
-            <a onclick="M.toast({html: 'Thanks For Creating A New Tutorial!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
-                <input type="submit" class="btn">
-            </a>
-        </form>
-    </div>
+ial_title">Title Here</h3>
+    <br>
+    <br>
+    <br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <input type="submit" class="btn">
+    </form>
+        </div>
+
 
     {% load static %}
    
     <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
     <script>
     tinyMCE.init({
+
         mode: "textareas",
         height: 800,
         plugins: "code bbcode autoresize",

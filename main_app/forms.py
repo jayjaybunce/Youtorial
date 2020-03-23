@@ -18,10 +18,11 @@ class CreateUserForm(UserCreationForm):
 class TutorialForm(forms.ModelForm):
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows':50,'class': 'form-control'}))
     category = forms.ModelChoiceField(queryset=Category.objects.all(),widget=forms.Select(attrs={'class':'btn'}))
-    video_url = forms.FileField(required=False)
+    video = forms.FileField(required=False)
+    video_url = forms.CharField(required=False)
     class Meta:
         model = Tutorial
-        fields = ['title','content','language','category']
+        fields = ['title','content','language','category','video_url']
         
 
         

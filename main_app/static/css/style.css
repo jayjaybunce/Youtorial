@@ -27,8 +27,16 @@ footer.page-footer {
   white-space: pre-wrap;
 }
 
+
 #toast-container .toast {
   background-color: #00AFC5;
+}
+
+
+#user_created_tut_cont{
+    height: 500px;
+    max-height:500px;
+    overflow: scroll;
 }
 
 /* .profile-pic {
