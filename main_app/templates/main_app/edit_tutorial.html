@@ -4,6 +4,7 @@
 {% block content %}
 
     <div class="container">
+    <h3 id="tutorial_title">{{tutorial.title}}</h3>
     <br>
     <br>
     <br>
@@ -23,7 +24,7 @@
     tinyMCE.init({
     mode: "textareas",
     height: 800,
-    plugins: "code bbcode autoresize",
+    plugins: "code bbcode autoresize codesample",
     statusbar: false,
     toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
     language: "{{ language }}",

@@ -5,7 +5,7 @@
 
     <div class="container">
      
-           New tutorial here
+ial_title">Title Here</h3>
     <br>
     <br>
     <br>
@@ -16,21 +16,23 @@
     </form>
         </div>
 
+
     {% load static %}
    
     <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
     <script>
     tinyMCE.init({
-    mode: "textareas",
-    height: 800,
-    plugins: "code bbcode autoresize",
-    statusbar: false,
-    toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-    language: "{{ language }}",
-    directionality: "{{ directionality }}",
-    spellchecker_languages : "{{ spellchecker_languages }}",
-    spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
-});
+
+        mode: "textareas",
+        height: 800,
+        plugins: "code bbcode autoresize",
+        statusbar: false,
+        toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
+        language: "{{ language }}",
+        directionality: "{{ directionality }}",
+        spellchecker_languages : "{{ spellchecker_languages }}",
+        spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
+    });
     </script>
    
 {% endblock  %}
