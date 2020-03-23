@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <title>Saved Tutorials</title>
-</head>
-
-<body class="grey lighten-4">
-    <h2>saved Tutorials</h2>
-    <div class="row">
-        {% for st in Status %}
-        <p>{{st}}</p>
-        {% endfor %}
+<h2>saved Tutorials</h2>
+<div class="row">
+    {% for stats in stats %}
+    <div>
+        <p>{{level_status}}</p>
+        <p>{{stats}}</p>
+        <p>{{saved}}</p>
+        <p>{{user}}</p>
+        <p>{{tutorial}}</p>
     </div>
-
-</body>
-<main class="container">
-    {% block content %} {% endblock %}
-</main>
-
-</html>
+    {% endfor %}
+</div>

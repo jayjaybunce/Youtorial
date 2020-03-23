@@ -4,7 +4,9 @@ import uuid
 import boto3
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from .models import Status
+from .models import *
+
+
 
 
 S3_BASE_URL = 'https://s3-us-west-1.amazonaws.com/'
@@ -26,9 +28,10 @@ def user_profile(request):
     return render(request, 'main_app/user_profile.html' ,context)
 
 def saved_tutorials(request):
-    return render(request=request, 
-                  template_name="main_app/saved_tutorials.html",
-                  context={"status": Status.objects.all})
+    stats = Status.objects.all()
+    
+    context = {'stats': stats}
+    return render(request, 'main_app/saved_tutorials.html', context)
 
 
 def tutorials(request):
