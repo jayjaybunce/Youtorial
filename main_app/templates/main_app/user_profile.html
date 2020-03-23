@@ -5,55 +5,54 @@
 
 <h2 class="center">Profile Page</h2>
 
-<div class="container">
-  <div class="row">
-    <div class="col s4 center">
-      <div class="col s12 left">
-        <div class="card grey white-text">
-          {% if user.photo_set.all|length == 0 %}
-            <div class="material-icons">
-              <i class="material-icons circle blue">person</i>
-            </div>
-          {% elif user.photo_set.first %}
-            <img class="responsive-img card-panel" src="{{photo.url}}">
-          {% endif %}
-            <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text">
-              {% csrf_token %}
-              <input type="file" name="photo-file">
-              <br><br>
-              <input type="submit" class="btn" value="Upload Photo">
-            </form>     
-        </div>
-      </div>
-      <div class="col s12 left">
-        <div class="card grey white-text">
-          <h4 class="username">{{user.username}}</h4>
-        </div>
-      </div>
-      <div class="col s12 left">
-        <div class="card grey white-text">
-          <h4 class="user-info">User Info</h4>
-          <h5>Last Login: {{user.last_login}}</h5>
-          <h5>Member Since: {{user.date_joined}}</h5>
-        </div>
+<div class="row">
+  <div class="col s4 center">
+    <div class="col s12 left">
+      <div class="card grey white-text">
+        {% if user.photo_set.all|length == 0 %}
+          <div class="material-icons">
+            <i class="material-icons circle blue">person</i>
+          </div>
+        {% elif user.photo_set.first %}
+          <img class="responsive-img card-panel" src="{{photo.url}}">
+        {% endif %}
+          <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text">
+            {% csrf_token %}
+            <input type="file" name="photo-file">
+            <br><br>
+            <input type="submit" class="btn" value="Upload Photo">
+          </form>     
       </div>
     </div>
-    <div class="col s8 right">
-      <div class="col s10">
-        <div class="card grey white-text card-panel">
-          <h4 class= "completed-tutorial">Completed Tutorials</h4>
-        </div>
+    <div class="col s12 left">
+      <div class="card grey white-text">
+        <h4 class="username">{{user.username}}</h4>
       </div>
-      <div class="col s10">
-        <div class="card grey white-text card-panel">
-          <h4 class= "saved-tutorial">Saved Tutorials</h4>
-        </div>
+    </div>
+    <div class="col s12 left">
+      <div class="card grey white-text">
+        <h4 class="user-info">User Info</h4>
+        <h5>Last Login: {{user.last_login}}</h5>
+        <h5>Member Since: {{user.date_joined}}</h5>
       </div>
-      <div class="col s10">
-        <div class="card grey white-text card-panel inline">
-          <h4 class= "created-tutorial">Created Tutorials</h4>
-          {% for tutorial in tutorials %}
-            <div class="card black-text" style="padding: 10px">
+    </div>
+  </div>
+  <div class="col s8 right">
+    <div class="col s10 completed-tutorial">
+      <div class="card grey white-text card-panel">
+        <h4 class= "card-title">Completed Tutorials</h4>
+      </div>
+    </div>
+    <div class="col s10 saved-tutorial">
+      <div class="card grey white-text card-panel">
+        <h4 class= "card-title">Saved Tutorials</h4>
+      </div>
+    </div>
+    <div class="col s10 created-tutorial">
+      <div class="card grey white-text card-panel inline">
+        <h4 class="card-title">Created Tutorials</h4>
+        {% for tutorial in tutorials %}
+          <div class="card black-text z-depth-3" style="padding: 10px">
             <div class="row">
               <div class="col s9">
                 {{ tutorial.category }}
@@ -65,15 +64,12 @@
               <br>
               <button class="btn right tooltipped" data-position="right" data-tooltip="Edit"><i class="material-icons">edit</i></button>
               </div>
-            </div>
-          
-              
-            </div>
-          {% endfor %}
-        </div>
+            </div>          
+          </div>
+        {% endfor %}
       </div>
-    </div> 
-  </div>
+    </div>
+  </div> 
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
