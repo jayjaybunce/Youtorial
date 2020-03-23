@@ -2,10 +2,10 @@
 
 {% block content %}
     <h2 class="center">{{ tutorial.title }}</h2>
-    
+    {% if tutorial.video_url %}
     <div class="row">
     <div class="col s6 left" style="margin-left: -200px; width:800px">
-            <div class="card-content">
+            <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
                <div class="chip">
                   <img src="{{photo.url}}" alt="">
                   {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
@@ -15,14 +15,36 @@
             </div>
           </div>
       <div class="col s6">
-              <p>Video Walkthrough</p>
-              <video width="800" height="600" controls>
+              {% if 'youtube' in tutorial.video_url%}
+                <iframe width="800px" height="600px" src="{{tutorial.video_url}}">
+                </iframe>
+              {% else %}
+                <video width="800" height="600" controls>
                 <source src="{{ tutorial.video_url }}" type="video/mp4">
                 <source src="{{ tutorial.video_url }}" type="video/ogg">
               Your browser does not support the video tag.
               </video>
+              {% endif %}
+              
             </div>
     </div>
+    {% else %}
+    <div class="row">
+    <div class="col s12 left">
+            <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
+               <div class="chip">
+                  <img src="{{photo.url}}" alt="">
+                  {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
+                </div>
+                <div class="right">
+                  <a href="{% url 'save_tutorial' tutorial.id%}"><i class="material-icons">favorite</i></a>
+                </div>
+              <hr>
+              <p class="textwrap" style="word-wrap: break-word">Walkthrough: {{ tutorial.content | safe}}</p>
+            </div>
+          </div>
+    </div>
+    {% endif %}
     <script>
       tinymce.activeEditor.execCommand('CodeSample');
     </script>

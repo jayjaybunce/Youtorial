@@ -16,6 +16,7 @@ urlpatterns = [
     path('user/<int:user_id>/add_photo', views.add_photo, name='add_photo'),
     path('tutorials/<int:tutorial_id>/edit/', views.edit_tutorial, name='edit_tutorial'),
     path('tutorials/<int:tutorial_id>/delete/', views.delete_tutorial, name='delete_tutorial'),
+    path('tutorials/<int:tutorial_id>/save/', views.save_tutorial, name='save_tutorial')
     
     
     

@@ -61,7 +61,7 @@
       <div class="col s10">
         <div class="card grey white-text card-panel inline">
           <h4 class= "created-tutorial">Created Tutorials</h4>
-          <div style="max-height: 800px; overflow: scroll">
+          <div style="max-height: 800px; overflow-y:scroll;">
           {% for tutorial in tutorials %}
             <div class="card black-text" style="padding: 10px">
             <div class="row">
@@ -95,5 +95,7 @@
     var elems = document.querySelectorAll('.tooltipped');
     var instances = M.Tooltip.init(elems);
   });
+  
 </script>
+
 {% endblock  %}

@@ -54,7 +54,7 @@ def new_tutorial(request):
     categories = Category.objects.all()
     url = ''
     if request.method == 'POST':
-        video_file = request.FILES.get('video_url')
+        video_file = request.FILES.get('video')
         if video_file:
             s3 = boto3.client('s3')
             key = uuid.uuid4().hex[:6] + video_file.name[video_file.name.rfind('.'):]
@@ -67,7 +67,17 @@ def new_tutorial(request):
             except:
                 print('An error occured uploding file e to S3')
     # return redirect('tutorials')
-        
+        if request.POST['video_url']:
+            v_url = request.POST['video_url']
+            if 'youtube' in v_url:
+                for index,letter in enumerate(v_url):
+                    if letter == '=':
+                        v_url = v_url[index+1:]
+                        print(v_url)
+                        break
+
+            url = f'https://youtube.com/embed/{v_url}'
+        print(url)
         tut_form = TutorialForm(request.POST)
         tut = tut_form.save(commit=False)
         tut.user = request.user
@@ -75,7 +85,6 @@ def new_tutorial(request):
         if tut_form.is_valid():
             tut_form.save()
         return redirect(f'/tutorials/{tut.id}')
-
     form = TutorialForm()
     context = {
         'urls': get_url_list(request),
@@ -159,7 +168,7 @@ def add_photo(request, user_id):
 def edit_tutorial(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
     if request.method == 'POST':
-        video_file = request.FILES.get('video_url')
+        video_file = request.FILES.get('video')
         if video_file:
             s3 = boto3.client('s3')
             key = uuid.uuid4().hex[:6] + video_file.name[video_file.name.rfind('.'):]
@@ -172,7 +181,9 @@ def edit_tutorial(request, tutorial_id):
             except:
                 print('An error occured uploding file e to S3')
     # return redirect('tutorials')
-        
+        if request.POST['video_url'] != '':
+            tutorial.video_url = request.POST['video_url']
+
         category = Category.objects.get(id=request.POST['category'])
         tutorial.title = request.POST['title']
         tutorial.content = request.POST['content']
@@ -200,7 +211,8 @@ def saved_tutorials(request):
     context = {'stats': stats}
     return render(request, 'main_app/saved_tutorials.html', context)
 
-
+def save_tutorial(request):
+    return redirect('/user/')
 
 
 
