@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .utils import get_url_list
 from .forms import TutorialForm
 from .models import Photo, Category, Tutorial, Video, Status
+from django.http import HttpResponse
 
 import uuid
 import boto3
@@ -28,7 +29,9 @@ def homepage(request):
     return render(request, 'main_app/index.html', context)
 
 def user_profile(request):
-    stats = Status.objects.all()
+    stats = Status.objects.filter(user=request.user)
+    completed_stats = stats.filter(stats="C")
+    saved_stats = stats.filter(stats="S")
     try:
         photo = Photo.objects.get(user=request.user)
     except:
@@ -38,7 +41,8 @@ def user_profile(request):
         'title': 'User',
         'photo': photo,
         'tutorials': Tutorial.objects.filter(user=request.user),
-        'stats': stats
+        'completed_stats': completed_stats,
+        'saved_stats': saved_stats,
     }
     return render(request, 'main_app/user_profile.html' ,context)
 
@@ -221,8 +225,14 @@ def saved_tutorials(request):
     context = {'stats': stats}
     return render(request, 'main_app/saved_tutorials.html', context)
 
-def save_tutorial(request):
-    return redirect('/user/')
+def save_tutorial(request, tutorial_id):
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    status = Status()
+    status.tutorial = tutorial
+    status.user = request.user
+    status.stats = "S"
+    status.save()
+    return redirect('homepage')
 
 
 

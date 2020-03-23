@@ -9,7 +9,7 @@
                 <div class="card">
                     <div class="card-image">
                         <img src="{{t.user_url}}" alt="tutorial image">
-                        <a href="#" class="btn-floating pink right halfway-fab waves-effect waves-light">
+                        <a href="{% url 'save_tutorial' t.id%}" class="btn-floating pink right halfway-fab waves-effect waves-light">
                             <i class="material-icons">favorite</i>
                         </a>
                     </div>
