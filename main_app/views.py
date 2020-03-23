@@ -8,6 +8,7 @@ from .utils import get_url_list
 from .forms import TutorialForm
 from .models import Photo, Category, Tutorial, Video, Status
 
+
 import uuid
 import boto3
 
@@ -99,6 +100,8 @@ def categories(request):
         'title': 'Categories',
     }
     return render(request, 'main_app/categories.html' , context)
+
+
 
 def about(request):
     context = {
