@@ -14,7 +14,7 @@
                     <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
                   </div>
                 <hr>
-                <p class="textwrap">Walkthrough: {{ tutorial.content | safe}}</p>
+                <p class="textwrap"> {{ tutorial.content | safe}}</p>
               </div>
           </div>
         <div class="col s6">
