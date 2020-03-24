@@ -40,27 +40,38 @@
     </div>
   </div>
   <div class="col s8 right">
-    <div class="col s10 completed-tutorial">
+    <div class="col s12 completed-tutorial">
       <div class="card grey white-text card-panel">
         <h4 class= "card-title">Completed Tutorials</h4>
-      </div>
-      <div class="col s10">
-        <div class="card grey white-text card-panel">
-          <h4 class= "saved-tutorial">Saved Tutorials</h4>
-           {% for stats in stats %}
-        <div>
-            <p>{{level_status}}</p>
-            <p>{{stats}}</p>
-            <p>{{saved}}</p>
-            <p>{{user}}</p>
+        {% for stat in completed_stats %}
+          <div>
             <p>{{tutorial}}</p>
-        </div>
+          </div>
         {% endfor %}
+      </div>
+    </div>
+      <div class="col s6">
+        <div class="card grey white-text card-panel">
+          <h5 class= "tut-title">Saved Tutorials</h5>
+          <hr>
+          <div style="max-height: 800px; overflow-y:scroll;">
+            {% for stat in saved_stats %}
+              <div class="card black-text" style="padding: 10px">
+                <div class="row">
+                  <div class="col s9">
+                    <p>{{stat.tutorial.user}}</p>
+                    <p>{{stat.tutorial.title}}</p>
+                  </div>
+                </div> 
+              </div>
+            {% endfor %}
+          </div>
         </div>
       </div>
-      <div class="col s10">
+      <div class="col s6">
         <div class="card grey white-text card-panel inline">
-          <h4 class= "created-tutorial">Created Tutorials</h4>
+          <h5 class= "tut-title">Created Tutorials</h5>
+          <hr>
           <div style="max-height: 800px; overflow-y:scroll;">
           {% for tutorial in tutorials %}
             <div class="card black-text" style="padding: 10px">
