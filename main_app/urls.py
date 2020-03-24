@@ -19,6 +19,7 @@ urlpatterns = [
     path('tutorials/<int:tutorial_id>/save/', views.save_tutorial, name='save_tutorial'),
     path('tutorials/<int:tutorial_id>/unsave/', views.unsave_tutorial, name='unsave_tutorial'),
     path('tutorials/<int:tutorial_id>/comment/', views.add_comment, name='add_comment'),
+    path('categories/new',views.add_category, name='add_category'),
     
     
     

@@ -155,9 +155,12 @@ def tutorial_detail(request, tutorial_id):
 
 
 def categories(request):
+    categories = Category.objects.all()
     context = {
         'urls': get_url_list(request),
         'title': 'Categories',
+        'categories': categories,
+        
     }
     return render(request, 'main_app/categories.html' , context)
 
@@ -293,12 +296,34 @@ def save_tutorial(request, tutorial_id):
 def unsave_tutorial(request,tutorial_id):
     print('do some things here')
 
+
+@login_required
 def add_comment(request, tutorial_id):
     prev_url = request.META.get('HTTP_REFERER')
     tutorial = Tutorial.objects.get(id=tutorial_id)
     comment = Comment(content=request.POST['content'],tutorial=tutorial,user=request.user)
     comment.save()
     return redirect(prev_url)
+
+
+def add_category(request):
+    prev_url = request.META.get('HTTP_REFERER')
+    cat_name = request.POST['name']
+    cat_photo_file = request.FILES['photo_url']
+    url = ''
+    print('url before upload',url)
+    if cat_photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + cat_photo_file.name[cat_photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(cat_photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+        except:
+            print('An error occured uploading file e to S3')
+    category = Category(name=cat_name,photo_url=url)
+    category.save()
+    return redirect(prev_url)
+    
 
 
 
