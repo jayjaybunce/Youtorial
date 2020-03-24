@@ -76,3 +76,15 @@ footer.page-footer {
   margin-bottom: 0;
   bottom: 0;
 }
+
+#tutorial_content{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 800px;
+}
+#video_player{
+  height: 600px;
+  width: 800px;
+  margin-right: 0;
+
+}
