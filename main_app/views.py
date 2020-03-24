@@ -7,7 +7,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .utils import get_url_list
 from .forms import TutorialForm
-from .models import Photo, Category, Tutorial, Video, Status
+from .models import Photo, Category, Tutorial, Video, Status, Comment
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -122,6 +122,13 @@ def new_tutorial(request):
 
 def tutorial_detail(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
+    comments = Comment.objects.filter(tutorial_id=tutorial_id)
+    for comment in comments:
+        try:
+            comment.user_url = Photo.objects.get(user_id=comment.user).url
+        except Photo.DoesNotExist:
+            comment.user_url = None
+
     stats_list = []
     try:
         stats = Status.objects.filter(stats='S',tutorial_id=tutorial.id)
@@ -129,7 +136,10 @@ def tutorial_detail(request, tutorial_id):
             stats_list.append(stat.user)
     except Status.DoesNotExist:
         stats = None
-    photo = Photo.objects.get(user_id=tutorial.user.id)
+    try:
+        photo = Photo.objects.get(user_id=tutorial.user.id)
+    except Photo.DoesNotExist:
+        photo = None
     tutorial_form = TutorialForm()
     context = {
         'tutorial': tutorial, 
@@ -137,6 +147,7 @@ def tutorial_detail(request, tutorial_id):
         'photo': photo,
         'urls': get_url_list(request),
         'stats': stats_list,
+        'comments': comments,
         }
     print(f"This is the tutorial: {tutorial}")
     return render(request, 'main_app/tutorial_detail.html', context)
@@ -229,7 +240,7 @@ def edit_tutorial(request, tutorial_id):
                         break
                 url = f'https://youtube.com/embed/{v_url}'
             else:
-                tutorial.video_url = v_url
+                url = request.POST['video_url']
             
                           
 
@@ -281,6 +292,14 @@ def save_tutorial(request, tutorial_id):
 @login_required
 def unsave_tutorial(request,tutorial_id):
     print('do some things here')
+
+def add_comment(request, tutorial_id):
+    prev_url = request.META.get('HTTP_REFERER')
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    comment = Comment(content=request.POST['content'],tutorial=tutorial,user=request.user)
+    comment.save()
+    return redirect(prev_url)
+
 
 
 
