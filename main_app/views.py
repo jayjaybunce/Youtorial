@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
+
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .utils import get_url_list
@@ -12,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
+
 
 
 
@@ -52,6 +54,13 @@ def tutorials(request, category_name):
     category = Category.objects.get(name=category_name)
     tutorials = Tutorial.objects.filter(category=category.id)
     photo = Photo.objects.get(user_id=request.user.id)
+    all_stats = Status.objects.all()
+    for tut in tutorials:
+        tut.stats = []
+        tut_stats = all_stats.filter(tutorial_id=tut.id)
+        for stat in tut_stats:
+            tut.stats.append(stat.user)
+
 
     for t in tutorials:
         p = Photo.objects.get(user_id=t.user.id)
@@ -113,6 +122,13 @@ def new_tutorial(request):
 
 def tutorial_detail(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
+    stats_list = []
+    try:
+        stats = Status.objects.filter(stats='S',tutorial_id=tutorial.id)
+        for stat in stats:
+            stats_list.append(stat.user)
+    except Status.DoesNotExist:
+        stats = None
     photo = Photo.objects.get(user_id=tutorial.user.id)
     tutorial_form = TutorialForm()
     context = {
@@ -120,6 +136,7 @@ def tutorial_detail(request, tutorial_id):
         'tutorial_form': tutorial_form,
         'photo': photo,
         'urls': get_url_list(request),
+        'stats': stats_list,
         }
     print(f"This is the tutorial: {tutorial}")
     return render(request, 'main_app/tutorial_detail.html', context)
@@ -250,13 +267,20 @@ def saved_tutorials(request):
 
 @login_required
 def save_tutorial(request, tutorial_id):
+    prev_url = request.META.get('HTTP_REFERER')
     tutorial = Tutorial.objects.get(id=tutorial_id)
     status = Status()
     status.tutorial = tutorial
     status.user = request.user
     status.stats = "S"
     status.save()
-    return redirect('homepage')
+    return redirect(prev_url)
+
+
+
+@login_required
+def unsave_tutorial(request,tutorial_id):
+    print('do some things here')
 
 
 

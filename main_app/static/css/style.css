@@ -83,8 +83,32 @@ footer.page-footer {
   max-height: 800px;
 }
 #video_player{
-  height: 600px;
-  width: 800px;
+
   margin-right: 0;
 
+}
+
+
+
+.container {
+  margin: 0 auto;
+  max-width: 1980px;
+  width: 90%;
+}
+
+
+#container{
+  margin: 0 auto;
+  max-width: 1980px;
+  width: 90%;
+}
+@media only screen and (min-width: 601px) {
+  .container {
+    width: 85%;
+  }
+}
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 70%;
+  }
 }
