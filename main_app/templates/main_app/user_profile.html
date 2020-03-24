@@ -8,14 +8,13 @@
 <div class="row">
   <div class="col s4 center">
     <div class="col s12 left">
+    
       <div class="card grey white-text">
+        
         {% if user.photo_set.all|length == 0 %}
           <div class="material-icons">
             <i class="material-icons circle blue">person</i>
           </div>
-        {% elif user.photo_set.first %}
-          <img class="responsive-img card-panel" src="{{photo.url}}">
-        {% endif %}
           <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text">
             {% csrf_token %}
             <input type="file" name="photo-file">
@@ -23,7 +22,21 @@
             <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
               <input type="submit" class="btn" value="Upload Photo">
             </a>
-          </form>     
+          </form>   
+        {% elif user.photo_set.first %}
+        
+          <img class="responsive-img card-panel" src="{{photo.url}}">
+          <button class="btn-flat wave" id="upload_show_button">Upload Another</button>
+          <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text" id="user_profile_form">
+            {% csrf_token %}
+            <input type="file" name="photo-file">
+            <br><br>
+            <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+              <input type="submit" class="btn" value="Upload Photo">
+            </a>
+          </form>   
+        {% endif %}
+            
       </div>
     </div>
     <div class="col s12 left">
@@ -54,7 +67,7 @@
         <div class="card grey white-text card-panel">
           <h5 class= "tut-title">Saved Tutorials</h5>
           <hr>
-          <div style="max-height: 800px; overflow-y:scroll;">
+          <div style="max-height: 800px; overflow-y:scroll; overflow-x:hidden;">
             {% for stat in saved_stats %}
               <div class="card black-text" style="padding: 10px">
                 <div class="row">
@@ -72,7 +85,7 @@
         <div class="card grey white-text card-panel inline">
           <h5 class= "tut-title">Created Tutorials</h5>
           <hr>
-          <div style="max-height: 800px; overflow-y:scroll;">
+          <div style="max-height: 800px; overflow-y:scroll; overflow-x:hidden;">
           {% for tutorial in tutorials %}
             <div class="card black-text" style="padding: 10px">
             <div class="row">

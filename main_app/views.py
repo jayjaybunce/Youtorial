@@ -8,7 +8,8 @@ from .utils import get_url_list
 from .forms import TutorialForm
 from .models import Photo, Category, Tutorial, Video, Status
 from django.http import HttpResponse
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 
@@ -28,6 +29,7 @@ def homepage(request):
     }
     return render(request, 'main_app/index.html', context)
 
+@login_required
 def user_profile(request):
     stats = Status.objects.filter(user=request.user)
     completed_stats = stats.filter(stats="C")
@@ -64,6 +66,7 @@ def tutorials(request, category_name):
     }
     return render(request, 'main_app/tutorials.html' ,context)
 
+@login_required
 def new_tutorial(request):
     categories = Category.objects.all()
     url = ''
@@ -157,6 +160,9 @@ def sign_up(request):
     }
     return redirect('homepage')
 
+
+
+@login_required
 def add_photo(request, user_id):
     photo_file = request.FILES.get('photo-file', None) 
     
@@ -178,8 +184,9 @@ def add_photo(request, user_id):
             print('An error occured uploading file e to S3')
     return redirect('user_profile')
 
-
+@login_required
 def edit_tutorial(request, tutorial_id):
+    
     tutorial = Tutorial.objects.get(id=tutorial_id)
     if request.method == 'POST':
         video_file = request.FILES.get('video')
@@ -196,8 +203,22 @@ def edit_tutorial(request, tutorial_id):
                 print('An error occured uploding file e to S3')
     # return redirect('tutorials')
         if request.POST['video_url'] != '':
-            tutorial.video_url = request.POST['video_url']
+            v_url = request.POST['video_url']
+            if 'youtube' in v_url:
+                for index,letter in enumerate(v_url):
+                    if letter == '=':
+                        v_url = v_url[index+1:]
+                        print(v_url)
+                        break
+                url = f'https://youtube.com/embed/{v_url}'
+            else:
+                tutorial.video_url = v_url
+            
+                          
 
+        if not request.FILES and not request.POST['video_url']:
+            url = ''
+        tutorial.video_url = url
         category = Category.objects.get(id=request.POST['category'])
         tutorial.title = request.POST['title']
         tutorial.content = request.POST['content']
@@ -215,6 +236,8 @@ def edit_tutorial(request, tutorial_id):
     }
     return render(request, 'main_app/edit_tutorial.html', context)
 
+
+@login_required
 def delete_tutorial(request, tutorial_id):
     Tutorial.objects.get(id=tutorial_id).delete()
     return redirect('/user/')
@@ -225,6 +248,7 @@ def saved_tutorials(request):
     context = {'stats': stats}
     return render(request, 'main_app/saved_tutorials.html', context)
 
+@login_required
 def save_tutorial(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
     status = Status()
@@ -233,8 +257,6 @@ def save_tutorial(request, tutorial_id):
     status.stats = "S"
     status.save()
     return redirect('homepage')
-
-
 
 
 

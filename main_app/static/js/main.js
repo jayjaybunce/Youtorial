@@ -22,7 +22,31 @@ function handlFileClick(evt){
 
 }
 
+if(document.querySelector('#user_profile_form')){
+  let buttonEl = document.querySelector('#upload_show_button')
+  buttonEl.addEventListener('click',handleUploadShow)
+  let formEl = document.querySelector('#user_profile_form')
+  formEl.style.opacity = '0'
+  formEl.style.display = 'none'
+}
 
+
+function handleUploadShow(evt){
+  let formEl = document.querySelector('#user_profile_form')
+  console.log(formEl)
+  if (formEl.style.opacity === '0'){
+    formEl.style.display = 'block'
+    formEl.style.opacity = '1'
+
+  }else{
+    formEl.style.opacity = '0'
+    formEl.style.display = 'none'
+    
+  }
+
+
+
+}
 
 
 
