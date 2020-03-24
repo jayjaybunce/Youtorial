@@ -8,6 +8,7 @@ urlpatterns = [
     path('tutorials/categories/<str:category_name>/', views.tutorials, name='tutorials'),
     path('tutorials/<int:tutorial_id>/', views.tutorial_detail, name='detail'),
     path('categories/', views.categories, name='categories'),
+    path('categories/<int:category_id>/delete/', views.categories_del, name='categories_del'),
     path('tutorials/new/', views.new_tutorial, name='new_tutorial'),
     path('tutorials/saved/', views.saved_tutorials, name='saved_tutorials'),
     path('about/', views.about, name='about'),

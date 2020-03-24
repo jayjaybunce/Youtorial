@@ -4,6 +4,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse
+from django.urls import reverse
 from .utils import get_url_list
 from .forms import TutorialForm
 from .models import Photo, Category, Tutorial, Video, Status
@@ -121,12 +123,18 @@ def tutorial_detail(request, tutorial_id):
 
 
 def categories(request):
-    context = {
-        'urls': get_url_list(request),
-        'title': 'Categories',
-    }
-    return render(request, 'main_app/categories.html' , context)
+    return render(request=request,
+     template_name="main_app/categories.html",
+     context={"categories": Category.objects.all})
 
+
+def categories_del(request, idCategory):
+    categories = Category.objects.get(id=idCategory)
+    if request.method=='POST':
+        Category.delete()
+        return redirect('categories')
+        return render(request,'main_app/categoriesDelete.html'), {'categories':Category}
+    
 
 
 def about(request):
