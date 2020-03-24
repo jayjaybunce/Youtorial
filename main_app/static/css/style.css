@@ -1,9 +1,8 @@
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 }
-
 main {
   flex: 1 0 auto;
 }
@@ -65,4 +64,15 @@ footer.page-footer {
 .tut-title {
   padding: 0;
   margin: -10px 0 10px 0;
+}
+
+
+#user_profile_form{
+  /* display: none; */
+  transition: 0.2s linear;
+}
+
+#footer{
+  margin-bottom: 0;
+  bottom: 0;
 }

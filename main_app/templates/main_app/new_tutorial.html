@@ -5,18 +5,19 @@
 
     <div class="container">
      
-<h3 id="tutorial_title">Title Here</h3>
-    <br>
-    <br>
-    <br>
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p}}
-        <a onclick="M.toast({html: 'Thanks For Creating A Tutorial!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
-            <input type="submit" class="btn">
-        </a>
-    </form>
-        </div>
+        <h3 id="tutorial_title">Title Here</h3>
+            <br>
+            <br>
+            <br>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p}}
+                <a onclick="M.toast({html: 'Thanks For Creating A Tutorial!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+                    <input type="submit" class="btn">
+                </a>
+            </form>
+    </div>
+    </div>
 
 
     {% load static %}
@@ -27,7 +28,7 @@
 
         mode: "textareas",
         height: 800,
-        plugins: "code bbcode autoresize",
+        plugins: "code bbcode autoresize codesample",
         statusbar: false,
         toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
         language: "{{ language }}",
