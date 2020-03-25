@@ -116,7 +116,7 @@ def new_tutorial(request):
         tut.user = request.user
         tut.video_url = url
         if tut_form.is_valid():
-            tut_form.save()
+            tut_form.save() 
         return redirect(f'/tutorials/{tut.id}')
     form = TutorialForm()
     context = {
