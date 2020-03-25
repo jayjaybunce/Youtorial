@@ -87,43 +87,43 @@
     {% else %}
       <div class="row">
         <div class="col s12 left">
-            <div class="card-content" style="word-wrap: break-word">
-              <div class="chip">
-                <img src="{{photo.url}}" alt="">
-                {{ tutorial.user.first_name}} {{tutorial.user.last_name}}    
-              </div>  
-                {% if user.id == tutorial.user.id %}
-                  <div class="right">
-                    <a href="" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
-                  </div> 
-                {% elif user in stats %}
-                  <div class="right">
-                    <a href="{% url 'unsave_tutorial' tutorial.id%}" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
-                  </div>                  
-                {% else %}
-                  <div class="right">
-                    <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
-                  </div>
-                {% endif %}
-              <hr>
-              <div id="tutorial_content">
-                <p class="textwrap" style="word-wrap: break-word">{{ tutorial.content | safe}}</p>
+          <div class="card-content" style="word-wrap: break-word">
+            <div class="chip">
+              <img src="{{photo.url}}" alt="">
+              {{ tutorial.user.first_name}} {{tutorial.user.last_name}}    
+            </div>  
+            {% if user.id == tutorial.user.id %}
+              <div class="right">
+                <a href="" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
+              </div> 
+            {% elif user in stats %}
+              <div class="right">
+                <a href="{% url 'unsave_tutorial' tutorial.id%}" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
+              </div>                  
+            {% else %}
+              <div class="right">
+                <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
               </div>
-              {% if user.id == tutorial.user.id%}      
-                <div class="right">
-                  <a href="#" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Thanks For Creating This Tutorial"><i class="material-icons">check_circle</i></a>
-                </div>
-              {% elif user in completed %}
-                <div class="right">
-                  <a href="#" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You've Already Completed This Tutorial"><i class="material-icons">check_circle</i></a>
-                </div>
-              {% else %}
-                <div class="right">
-                  <a href="{% url 'complete_tutorial' tutorial.id%}" class="btn-floating green right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Mark as Completed"><i class="material-icons">check_circle</i></a>
-                </div>
-              {% endif %}
+            {% endif %}
+            <hr>
+            <div id="tutorial_content">
+              <p class="textwrap" style="word-wrap: break-word">{{ tutorial.content | safe}}</p>
             </div>
-          </div>      
+            {% if user.id == tutorial.user.id%}      
+              <div class="right">
+                <a href="#" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Thanks For Creating This Tutorial"><i class="material-icons">check_circle</i></a>
+              </div>
+            {% elif user in completed %}
+              <div class="right">
+                <a href="#" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You've Already Completed This Tutorial"><i class="material-icons">check_circle</i></a>
+              </div>
+            {% else %}
+              <div class="right">
+                <a href="{% url 'complete_tutorial' tutorial.id%}" class="btn-floating green right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Mark as Completed"><i class="material-icons">check_circle</i></a>
+              </div>
+            {% endif %}
+          </div>
+        </div>      
       </div> 
     {% endif %} 
   <script>
