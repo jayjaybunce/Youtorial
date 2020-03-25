@@ -115,8 +115,13 @@
     <div class="row">
       <div class="col l6 left">
               <div class="card-content" style="word-wrap: break-word;">
-                <div class="chip center">
-                    <img src="{{photo.url}}" alt="">
+                <div class="chip">
+                    {% if photo.url %}
+                      <img src="{{photo.url}}" alt="">
+                    {% else %}
+
+                      <i class="material-icons circle blue center" id="blank_chip">person</i>
+                    {% endif %}
                     {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
                   </div>
 
