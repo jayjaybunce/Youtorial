@@ -167,19 +167,17 @@ main {
   #comments_wrapper{
     margin-top: 0;
   }
-
-
 }
 @media only screen and (min-width: 993px) {
   .container {
     width: 70%;
   }
   #comments_wrapper{
-    margin-top: -350px;
+    margin-top: -17%;
     
   }
   #comments_container{
-    margin-top: -280px;
+    margin-top: -13%;
    
   }
   #comment_row{
@@ -195,9 +193,10 @@ main {
   
   
 }
-#comments_wrapper{
+
+/* #comments_wrapper{
   
-}
+} */
 
 #blank_chip{
   float: left;
@@ -239,4 +238,26 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.category_photo{
+  height: 300px;
+  width: 300px;
+}
+
+.cat-title{
+  background-color: white;
+  padding: 5px;
+  color: black;
+}
+
+#cat-input{
+  width: 90%;
+}
+
+.truncate {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
