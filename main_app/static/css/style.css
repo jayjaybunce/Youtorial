@@ -136,14 +136,14 @@ main {
 }
 #video_player{
 
-  margin-right: 0;
+  max-height: 400px;
 
 }
 
 
 #comment_row{
   margin-top: 250px;
-  height: auto;
+  
 }
 
 
@@ -175,23 +175,49 @@ main {
     width: 70%;
   }
   #comments_wrapper{
-    margin-top: -17%;
+    margin-top: 0;
+    
+  }
+  #comments_wrapper-min{
+    margin-top: 100px;
     
   }
   #comments_container{
-    margin-top: -13%;
+    margin-top: 0;
+    
+   
+  }
+  #comments_container-min{
+    margin-top: 100px;
    
   }
   #comment_row{
     margin-top: 0;
+  }
+  #test-row{
+    max-height: 400px;
   }
  
 }
 
 #comments_container{
   max-height: 515px;
+
+  overflow-y: scroll;
+  
+  
+}
+#comments_container-min{
+  max-height: 890px;
   
   overflow-y: scroll;
+  
+  
+}
+#comments_wrapper-min{
+  
+  margin-top: 0px;
+  
   
   
 }
@@ -222,15 +248,15 @@ main {
 }
 
 .responsive-iframe{
-  height: 20vw;
-  width: 43vw;
+  height: 10vw;
+  width: 39vw;
 }
 
 .iframe-container{
   position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
+  width: 90%;
+  height: 400px;
+  
 }
 
 .iframe-container iframe{
@@ -254,4 +280,8 @@ main {
 
 #cat-input{
   width: 90%;
+}
+
+#test-row{
+  
 }
