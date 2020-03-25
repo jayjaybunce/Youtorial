@@ -64,15 +64,12 @@ def tutorials(request, category_name):
         for stat in tut_stats:
             tut.stats.append(stat.user)
 
-
-    for t in tutorials:
-        try:
-            p = Photo.objects.get(user_id=t.user.id)
-            t.user_url = p.url
-        except Photo.DoesNotExist:
-            p = None
-        
-
+        for t in tutorials:
+            try:
+                p = Photo.objects.get(user_id=t.user.id)
+                t.user_url = p.url
+            except Photo.DoesNotExist:
+                p = None
     context = {
         'urls': get_url_list(request),
         'title': 'title',
@@ -137,10 +134,14 @@ def tutorial_detail(request, tutorial_id):
             comment.user_url = None
 
     stats_list = []
+    completed_list = []
     try:
         stats = Status.objects.filter(stats='S',tutorial_id=tutorial.id)
         for stat in stats:
             stats_list.append(stat.user)
+        completed = Status.objects.filter(stats='C',tutorial_id=tutorial.id)
+        for complete in completed:
+            completed_list.append(complete.user)
     except Status.DoesNotExist:
         stats = None
     try:
@@ -154,6 +155,7 @@ def tutorial_detail(request, tutorial_id):
         'photo': photo,
         'urls': get_url_list(request),
         'stats': stats_list,
+        'completed': completed_list,
         'comments': comments,
         }
     print(f"This is the tutorial: {tutorial}")
@@ -297,12 +299,19 @@ def save_tutorial(request, tutorial_id):
     status.save()
     return redirect(prev_url)
 
-
-
 @login_required
 def unsave_tutorial(request,tutorial_id):
     print('do some things here')
 
+@login_required
+def complete_tutorial(request, tutorial_id):
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    status = Status()
+    status.tutorial = tutorial
+    status.user = request.user
+    status.stats = "C"
+    status.save()
+    return redirect('user_profile')
 
 @login_required
 def add_comment(request, tutorial_id):

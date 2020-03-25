@@ -9,34 +9,33 @@
                 <div class="card">
                     <div class="card-image">
                         <img src="{{t.user_url}}" alt="tutorial image">
-                            {% if user.id == t.user.id %}
-                            
+                        {% if user.id == t.user.id %} 
                             <div class="right">
                                 <a href="" class="btn-floating grey right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
                             </div>
-                            
-                            {% elif user in t.stats %}
-
+                        {% elif user in t.stats %}
                             <div class="right">
                                 <a href="{% url 'unsave_tutorial' t.id%}" class="btn-floating grey right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
                             </div>
-                            
-                            
-                            {% else %}
+                        {% else %}
                             <div class="right">
                                 <a href="{% url 'save_tutorial' t.id%}" class="btn-floating pink right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
                             </div>
-
-
-
-                            {% endif %}
+                        {% endif %}
                     </div>
                     <div class="card-content">
                         <a href="{% url 'detail' t.id%}">
                         <span class="card-title">{{ t.title }}</span>
                     </a>
                         <div class="chip">
-                            <img src="{{t.user_url}}" alt="Contact Person">
+                            {% if user.photo_set.all|length == 0 %}
+                                <div class="material-icons">
+                                    <i class="material-icons circle blue center" id="blank_chip">person</i>
+                                    <!-- <i class="material-icons circle blue center no-tut-pic">person</i> -->
+                                </div>
+                            {% else %}
+                                <img src="{{t.user_url}}" alt="Contact Person">
+                            {% endif %}
                             {{ t.user }}
                         </div>
                     </div>
