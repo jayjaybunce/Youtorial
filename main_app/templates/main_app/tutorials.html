@@ -5,33 +5,17 @@
     <h2 class="center">{{category.name}}</h2>
     <div class="row">
         {% for t in tutorials %}
-            <div class="col s4">
+            <div class="col s12 m6 l4">
                 <div class="card">
-                    <div class="card-image">
-                        <img src="{{t.user_url}}" alt="tutorial image">
-                        {% if user.id == t.user.id %} 
-                            <div class="right">
-                                <a href="" class="btn-floating grey right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
-                            </div>
-                        {% elif user in t.stats %}
-                            <div class="right">
-                                <a href="{% url 'unsave_tutorial' t.id%}" class="btn-floating grey right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
-                            </div>
-                        {% else %}
-                            <div class="right">
-                                <a href="{% url 'save_tutorial' t.id%}" class="btn-floating pink right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
-                            </div>
-                        {% endif %}
-                    </div>
                     <div class="card-content">
                         <a href="{% url 'detail' t.id%}">
-                        <span class="card-title">{{ t.title }}</span>
-                    </a>
+                        <span class="card-title truncate">{{ t.title }}</span>
+                        </a>
                         <div class="chip">
                             {% if user.photo_set.all|length == 0 %}
                                 <div class="material-icons">
-                                    <i class="material-icons circle blue center" id="blank_chip">person</i>
-                                    <!-- <i class="material-icons circle blue center no-tut-pic">person</i> -->
+                                    <!-- <i class="material-icons circle blue center" id="blank_chip">person</i> -->
+                                    <i class="material-icons circle blue center no-tut-pic">person</i>
                                 </div>
                             {% else %}
                                 <img src="{{t.user_url}}" alt="Contact Person">
@@ -41,6 +25,19 @@
                     </div>
                     <div class="card-action">
                         <a href="{% url 'detail' t.id%}" class="btn waves-effect waves-light">View Tutorial</a>
+                        {% if user.id == t.user.id %} 
+                            <div class="right">
+                                <a href="" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
+                            </div>
+                        {% elif user in t.stats %}
+                            <div class="right">
+                                <a href="{% url 'unsave_tutorial' t.id%}" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
+                            </div>
+                        {% else %}
+                            <div class="right">
+                                <a href="{% url 'save_tutorial' t.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>

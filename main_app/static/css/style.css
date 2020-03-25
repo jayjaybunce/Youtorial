@@ -167,8 +167,6 @@ main {
   #comments_wrapper{
     margin-top: 0;
   }
-
-
 }
 @media only screen and (min-width: 993px) {
   .container {
@@ -195,9 +193,10 @@ main {
   
   
 }
-#comments_wrapper{
+
+/* #comments_wrapper{
   
-}
+} */
 
 #blank_chip{
   float: left;
@@ -254,4 +253,11 @@ main {
 
 #cat-input{
   width: 90%;
+}
+
+.truncate {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
