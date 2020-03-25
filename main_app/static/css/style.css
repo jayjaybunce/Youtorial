@@ -285,3 +285,88 @@ main {
 #test-row{
   
 }
+
+
+/*  
+ *  Pure CSS star rating that works without reversing order
+ *  of inputs
+ *  -------------------------------------------------------
+ *  NOTE: For the styling to work, there needs to be a radio
+ *        input selected by default. There also needs to be a
+ *        radio input before the first star, regardless of
+ *        whether you offer a 'no rating' or 0 stars option
+ *  
+ *  This codepen uses FontAwesome icons
+ */
+
+ .showcase{
+  position: relative;
+  display: inline;
+  
+  
+}
+.rating-system1,
+.rating-system2,
+.rating-system3,
+.rating-system4{
+  
+  margin: 0 auto;
+  display:inline-block;
+  position: relative;
+} 
+
+
+
+.showcase input{
+  display:none;
+}
+
+.showcase label{
+  float:right;
+  display:inline-block;
+  width:20px;
+  height:5px;
+  background:#ccc;
+  margin:4px;
+  position: relative;
+  transition:all .3s;
+}
+
+.rating-system2 label{
+  width:10px;
+  height:10px;
+  border-radius:100%; 
+  margin:0 10px;
+}
+
+.ratings-system2 label:before{display:none;}
+.rating-system2 label:hover ~ label,
+.rating-system2 label:hover
+{
+  box-shadow: 0 0 0 2px #00C0D3,
+              inset 0 0 0 5px #333;
+  
+} 
+
+.rating-system2 input:checked ~ label{
+  background:gold;
+  box-shadow: 0 0 0 2px gold;
+  
+}
+
+#rating_wrapper{
+  width: 250px;
+  float: left;
+  height: auto;
+}
+#rating_button{
+  display: block;
+  
+}
+
+.checked{
+  box-shadow: 0 0 0 2px #00C0D3, inset 0 0 0 5px #333;
+}
+ 
+ 
+ 

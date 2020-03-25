@@ -22,11 +22,17 @@
         
       <div class="col l6 s12 left">
               <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
+                
                 <div class="chip">
-                    <img src="{{photo.url}}" alt="">
-                    
+                    {% if photo.url %}
+                      <img src="{{photo.url}}" alt="">
+                    {% else %}
+
+                      <i class="material-icons circle blue center" id="blank_chip">person</i>
+                    {% endif %}
                     {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
-                  </div>
+                  </div>                  
+                  
                    {% if user.id == tutorial.user.id %}
                   
                   <div class="right">
@@ -64,7 +70,7 @@
                         <a href="{% url 'complete_tutorial' tutorial.id%}" class="btn-floating green right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Mark as Completed"><i class="material-icons">check_circle</i></a>
                       </div>
                     {% endif %}
-                <div id="tutorial_content">
+                <div id="tutorial_content" class="s12">
                   <p class="textwrap" style="word-wrap: break-word;"> {{ tutorial.content | safe}}</p>
                 </div>
                 
@@ -108,13 +114,16 @@
     {% else %}
     <div class="row">
       <div class="col l6 left">
-              <div class="card-content" style="word-wrap: break-word">
-                <div class="chip">
+              <div class="card-content" style="word-wrap: break-word;">
+                <div class="chip center">
                     <img src="{{photo.url}}" alt="">
                     {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
-                    
                   </div>
-                      
+
+                 
+                  
+                
+                  
                   
                 
                     {% if user.id == tutorial.user.id %}
@@ -140,6 +149,29 @@
                     {% endif %}
                     
                 <hr>
+                 <div id="rating_wrapper">
+                  
+                    <div class="showcase">
+                      Rating:
+                      <div class="rating-system2">
+                        <form action="" method="POST">
+                          <input type="submit" name='rate2' id="star5_2" />
+                          <label for="star5_2"></label>
+                          <input type="submit" name='rate2' id="star4_2" />
+                          <label for="star4_2"></label>
+                          <input type="submit" name='rate2' id="star3_2" />
+                          <label for="star3_2"></label>
+                          <input type="submit" name='rate2' id="star2_2" />
+                          <label for="star2_2"></label>
+                          <input type="submit" name='rate2' id="star1_2" />
+                          <label for="star1_2"></label>
+                          
+
+                        <form>
+                      </div>
+                    </div>
+                  </div>
+                  
                 {% if user.id == tutorial.user.id%}      
                       <div class="right">
                         <a href="#" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Thanks For Creating This Tutorial"><i class="material-icons">check_circle</i></a>
@@ -153,6 +185,7 @@
                         <a href="{% url 'complete_tutorial' tutorial.id%}" class="btn-floating green right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Mark as Completed"><i class="material-icons">check_circle</i></a>
                       </div>
                     {% endif %}
+                    <br>
                 <div id="tutorial_content">
                   <p class="textwrap" style="word-wrap: break-word">{{ tutorial.content | safe}}</p>
                 </div>
