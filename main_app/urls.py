@@ -18,6 +18,9 @@ urlpatterns = [
     path('tutorials/<int:tutorial_id>/delete/', views.delete_tutorial, name='delete_tutorial'),
     path('tutorials/<int:tutorial_id>/save/', views.save_tutorial, name='save_tutorial'),
     path('tutorials/<int:tutorial_id>/unsave/', views.unsave_tutorial, name='unsave_tutorial'),
+    path('tutorials/<int:tutorial_id>/comment/', views.add_comment, name='add_comment'),
+    path('tutorials/<int:tutorial_id>/complete/', views.complete_tutorial, name='complete_tutorial'),
+    path('categories/new',views.add_category, name='add_category'),
     
     
     
