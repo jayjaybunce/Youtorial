@@ -98,7 +98,9 @@
                   {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
                   
                 </div>
-                  
+                    
+                
+              
                   {% if user.id == tutorial.user.id %}
                   
                   <div class="right">
@@ -120,6 +122,7 @@
 
 
                   {% endif %}
+                  
               <hr>
               <div id="tutorial_content">
                 <p class="textwrap" style="word-wrap: break-word">{{ tutorial.content | safe}}</p>
@@ -133,10 +136,13 @@
     
     {% endif %} 
     <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.tooltipped');
-    var instances = M.Tooltip.init(elems);
-  });
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.tooltipped');
+        var instances = M.Tooltip.init(elems);
+      });
+      $(':radio').change(function() {
+      console.log('New star rating: ' + this.value);
+    });
   
-</script>
+    </script>
 {% endblock  %}

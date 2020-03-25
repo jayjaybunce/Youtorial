@@ -53,7 +53,10 @@ def user_profile(request):
 def tutorials(request, category_name):
     category = Category.objects.get(name=category_name)
     tutorials = Tutorial.objects.filter(category=category.id)
-    photo = Photo.objects.get(user_id=request.user.id)
+    try:
+        photo = Photo.objects.get(user_id=request.user.id)
+    except Photo.DoesNotExist:
+        photo = None
     all_stats = Status.objects.all()
     for tut in tutorials:
         tut.stats = []
@@ -63,8 +66,12 @@ def tutorials(request, category_name):
 
 
     for t in tutorials:
-        p = Photo.objects.get(user_id=t.user.id)
-        t.user_url = p.url
+        try:
+            p = Photo.objects.get(user_id=t.user.id)
+            t.user_url = p.url
+        except Photo.DoesNotExist:
+            p = None
+        
 
     context = {
         'urls': get_url_list(request),
@@ -305,11 +312,13 @@ def add_comment(request, tutorial_id):
     comment.save()
     return redirect(prev_url)
 
-
+@login_required
 def add_category(request):
     prev_url = request.META.get('HTTP_REFERER')
     cat_name = request.POST['name']
-    cat_photo_file = request.FILES['photo_url']
+    
+    cat_photo_file = request.FILES.get('photo_url',None)
+    
     url = ''
     print('url before upload',url)
     if cat_photo_file:
