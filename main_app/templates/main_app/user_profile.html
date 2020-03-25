@@ -27,7 +27,7 @@
               <input type="file" name="photo-file">
               <br><br>
               <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
-                <input type="submit" class="btn" value="Upload Photo">
+                <input type="submit" class="btn truncate" value="Upload Photo">
               </a>
             </form>   
           {% endif %}    
@@ -52,7 +52,7 @@
           {% for stat in completed_stats %}
               <a href="{% url 'detail' stat.tutorial.id %}">
                 <div class="card col s3 m3 l2 comp-card z-depth-2"> 
-                  <p class="center">{{stat.tutorial.title}}</p>
+                  <p class="left truncate">{{stat.tutorial.title}}</p>
                 </div>
               </a>
           {% endfor %}
