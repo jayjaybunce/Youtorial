@@ -60,7 +60,7 @@ def tutorials(request, category_name):
     all_stats = Status.objects.all()
     for tut in tutorials:
         tut.stats = []
-        tut_stats = all_stats.filter(tutorial_id=tut.id)
+        tut_stats = all_stats.filter(tutorial_id=tut.id,stats='S')
         for stat in tut_stats:
             tut.stats.append(stat.user)
 
@@ -113,7 +113,7 @@ def new_tutorial(request):
         tut.user = request.user
         tut.video_url = url
         if tut_form.is_valid():
-            tut_form.save()
+            tut_form.save() 
         return redirect(f'/tutorials/{tut.id}')
     form = TutorialForm()
     context = {
@@ -301,7 +301,10 @@ def save_tutorial(request, tutorial_id):
 
 @login_required
 def unsave_tutorial(request,tutorial_id):
-    print('do some things here')
+    prev_url = request.META.get('HTTP_REFERER')
+    status = Status.objects.get(user=request.user,tutorial_id=tutorial_id,stats='S')
+    status.delete()
+    return redirect(prev_url)
 
 @login_required
 def complete_tutorial(request, tutorial_id):
