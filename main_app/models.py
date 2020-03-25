@@ -17,7 +17,6 @@ class Category(models.Model):
 class Tutorial(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    rating = models.IntegerField(null=True)
     published = models.DateTimeField(auto_now_add=True, blank=True)
     language = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.PROTECT)
@@ -67,6 +66,12 @@ class Photo(models.Model):
 class Video(models.Model):
     url = models.CharField(max_length=200,default='')
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
+
+
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
+    value = models.IntegerField()
 
 
 

@@ -63,6 +63,7 @@ def tutorials(request, category_name):
         tut_stats = all_stats.filter(tutorial_id=tut.id)
         for stat in tut_stats:
             tut.stats.append(stat.user)
+
         for t in tutorials:
             try:
                 p = Photo.objects.get(user_id=t.user.id)
@@ -320,11 +321,13 @@ def add_comment(request, tutorial_id):
     comment.save()
     return redirect(prev_url)
 
-
+@login_required
 def add_category(request):
     prev_url = request.META.get('HTTP_REFERER')
     cat_name = request.POST['name']
-    cat_photo_file = request.FILES['photo_url']
+    
+    cat_photo_file = request.FILES.get('photo_url',None)
+    
     url = ''
     print('url before upload',url)
     if cat_photo_file:
