@@ -305,7 +305,7 @@ def add_comment(request, tutorial_id):
     comment.save()
     return redirect(prev_url)
 
-
+@login_required
 def add_category(request):
     prev_url = request.META.get('HTTP_REFERER')
     cat_name = request.POST['name']
