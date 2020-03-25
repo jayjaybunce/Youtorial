@@ -8,11 +8,13 @@ from django.http import HttpResponse
 from django.urls import reverse
 from .utils import get_url_list
 from .forms import TutorialForm
+from django.views.generic.edit import CreateView
 from .models import Photo, Category, Tutorial, Video, Status
 
 
 import uuid
 import boto3
+
 
 
 
@@ -128,13 +130,10 @@ def categories(request):
      context={"categories": Category.objects.all})
 
 
-def categories_del(request, idCategory):
-    categories = Category.objects.get(id=idCategory)
-    if request.method=='POST':
-        Category.delete()
-        return redirect('categories')
-        return render(request,'main_app/categoriesDelete.html'), {'categories':Category}
-    
+def add_categories(request):    
+    new_cat = Category.objects.get(id=Category_id)
+    if request.method == 'POST':
+
 
 
 def about(request):

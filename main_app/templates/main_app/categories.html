@@ -14,12 +14,10 @@
             <td>{{n.id}}</td>
             <td>{{n.name}}</td>
             <td>{{n.published}}</td>
-            <td>
-                <a class="btn btn-primary btn-xs" href="">Edit</a>
-                <a class="btn btn-danger btn-xs" href="">Delete</a>
-
-            </td>
         </tr>
+        <td><a class="btn btn-primary btn-xs" href="{% url 'add_categories' %}">Add</a>
+        </td>
+
         {% endfor %}
     </tbody>
 </table>
