@@ -223,3 +223,18 @@ footer.page-footer {
   width: 100%;
   height: 100%;
 }
+
+.category_photo{
+  height: 300px;
+  width: 300px;
+}
+
+.cat-title{
+  background-color: white;
+  padding: 5px;
+  color: black;
+}
+
+#cat-input{
+  width: 90%;
+}
