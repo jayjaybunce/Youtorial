@@ -1,14 +1,15 @@
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-}
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 
+}
 main {
   flex: 1 0 auto;
 }
 
 footer.page-footer {
+  padding-top: 0;
   padding-bottom: 0;
   text-align: right;
 }
@@ -27,40 +28,213 @@ footer.page-footer {
   white-space: pre-wrap;
 }
 
-
 #toast-container .toast {
   background-color: #00AFC5;
 }
 
-
-#user_created_tut_cont{
-    height: 500px;
-    max-height:500px;
-    overflow: scroll;
-}
-
-/* .profile-pic {
-  padding: 20px;
-}
-
 .username {
-  padding: 20px;
+  padding: 20px 0 0 0;
+}
+
+.no-pic {
+  font-size: 60px;
+}
+
+.no-pic-style {
+  padding: 15px 0 0 0;
+}
+
+.pic-position {
+  padding: 20px 0 20px 0;
+  width: 100%;
+  height: auto;
+}
+
+.profile-pic {
+  border: 3px solid white;
+  margin: 15px auto;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.pic-card {
+  margin: 0 0 25px 0;
+}
+
+.profile-title {
+  margin: 10px 0 20px 0;
 }
 
 .user-info {
-  padding: 20px 20px 100px 20px;
-} */
-
-/* .completed-tutorial {
-  padding: 20px 20px 100px 20px;
+  padding: 0 0 10px 0;
 }
-
-.saved-tutorial {
-  padding: 20px 20px 100px 20px;
-} */
 
 .created-tutorial {
   padding: 20px 20px 100px 20px;
   width: 100%;
   height: 200px;
+}
+
+.saved-tutorial {
+  padding: 20px 20px 100px 20px;
+  width: 100%;
+  height: 200px;
+}
+
+.completed-tutorial {
+  margin: 0 0 -70px 0;
+  padding: 20px 20px 100px 20px;
+  width: 100%;
+  height: 200px;
+}
+
+.tut-title {
+  padding: 0;
+  margin: -10px 0 10px 0;
+}
+
+.save-comp {
+  max-height: 450px;
+  overflow-y:scroll;
+  overflow-x:hidden;
+}
+
+#user_profile_form{
+  /* display: none; */
+  transition: 0.2s linear;
+}
+
+#footer{
+  
+  right: 0;
+  height: 30px;
+  
+}
+
+#tutorial_content{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 1000px;
+}
+#video_player{
+
+  margin-right: 0;
+
+}
+
+
+#comment_row{
+  margin-top: 250px;
+  height: auto;
+}
+
+
+.container {
+  margin: 0 auto;
+  max-width: 1980px;
+  width: 90%;
+  height: auto;
+  position: relative;
+}
+
+#container{
+  margin: 0 auto;
+  max-width: 1980px;
+  width: 90%;
+}
+@media only screen and (min-width: 601px) {
+  .container {
+    width: 85%;
+  }
+  #comments_wrapper{
+    margin-top: 0;
+  }
+
+
+}
+@media only screen and (min-width: 993px) {
+  .container {
+    width: 70%;
+  }
+  #comments_wrapper{
+    margin-top: -350px;
+    
+  }
+  #comments_container{
+    margin-top: -280px;
+   
+  }
+  #comment_row{
+    margin-top: 0;
+  }
+ 
+}
+
+#comments_container{
+  max-height: 515px;
+  
+  overflow-y: scroll;
+  
+  
+}
+#comments_wrapper{
+  
+}
+
+#blank_chip{
+  float: left;
+  height: 32px;
+  width: 32px;
+  margin: 0 8px 0 -12px;
+}
+
+#comment_form{
+  width: 90%;
+  
+  
+}
+
+#comment_button{
+  font-size: 30px;
+  height: 3.55rem;
+  width: 10%;
+}
+.comment_card{
+  padding: 10px;
+}
+
+.responsive-iframe{
+  height: 20vw;
+  width: 43vw;
+}
+
+.iframe-container{
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+
+.iframe-container iframe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.category_photo{
+  height: 300px;
+  width: 300px;
+}
+
+.cat-title{
+  background-color: white;
+  padding: 5px;
+  color: black;
+}
+
+#cat-input{
+  width: 90%;
 }

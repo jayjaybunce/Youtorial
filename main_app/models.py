@@ -10,15 +10,13 @@ from datetime import datetime
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    published = models.DateTimeField(default = datetime.now, blank =True)
-
+    photo_url = models.CharField(max_length=200)
     def __str__(self):
         return self.name
 
 class Tutorial(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    rating = models.IntegerField(null=True)
     published = models.DateTimeField(auto_now_add=True, blank=True)
     language = models.CharField(max_length=200)
     category = models.ForeignKey(Category,on_delete=models.PROTECT)
@@ -70,13 +68,7 @@ class Video(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
 
 
-
-
-
-
-    
-
-
-
-
-
+class Rating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
+    value = models.IntegerField()

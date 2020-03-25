@@ -1,37 +1,33 @@
-{% extends 'base_min.html' %}
+{% extends 'base_min.html' %} {% block content %}
 
-
-{% block content %}
-
-    <div class="container">
+<div class="container">
     <h3 id="tutorial_title">{{tutorial.title}}</h3>
     <br>
     <br>
     <br>
     <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p}}
-        
+        {% csrf_token %} {{ form.as_p}}
+
 
         <input type="submit" class="btn">
     </form>
-        </div>
+</div>
 
-    {% load static %}
-   
-    <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
-    <script>
+{% load static %}
+
+<script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
+<script>
     tinyMCE.init({
-    mode: "textareas",
-    height: 800,
-    plugins: "code bbcode autoresize codesample",
-    statusbar: false,
-    toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
-    language: "{{ language }}",
-    directionality: "{{ directionality }}",
-    spellchecker_languages : "{{ spellchecker_languages }}",
-    spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
-});
-    </script>
-   
-{% endblock  %}
+        mode: "textareas",
+        height: 800,
+        plugins: "code bbcode autoresize codesample",
+        statusbar: false,
+        toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
+        language: "{{ language }}",
+        directionality: "{{ directionality }}",
+        spellchecker_languages: "{{ spellchecker_languages }}",
+        spellchecker_rpc_url: "{{ spellchecker_rpc_url }}"
+    });
+</script>
+
+{% endblock %}

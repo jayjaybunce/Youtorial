@@ -2,16 +2,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
+
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
-from django.urls import reverse
 from .utils import get_url_list
 from .forms import TutorialForm
-from django.views.generic.edit import CreateView
-from .models import Photo, Category, Tutorial, Video, Status
-
-
+from .models import Photo, Category, Tutorial, Video, Status, Comment
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 
@@ -32,8 +31,11 @@ def homepage(request):
     }
     return render(request, 'main_app/index.html', context)
 
+@login_required
 def user_profile(request):
-    stats = Status.objects.all()
+    stats = Status.objects.filter(user=request.user)
+    completed_stats = stats.filter(stats="C")
+    saved_stats = stats.filter(stats="S")
     try:
         photo = Photo.objects.get(user=request.user)
     except:
@@ -43,18 +45,33 @@ def user_profile(request):
         'title': 'User',
         'photo': photo,
         'tutorials': Tutorial.objects.filter(user=request.user),
-        'stats': stats
+        'completed_stats': completed_stats,
+        'saved_stats': saved_stats,
     }
     return render(request, 'main_app/user_profile.html' ,context)
 
 def tutorials(request, category_name):
     category = Category.objects.get(name=category_name)
     tutorials = Tutorial.objects.filter(category=category.id)
-    photo = Photo.objects.get(user_id=request.user.id)
+    try:
+        photo = Photo.objects.get(user_id=request.user.id)
+    except Photo.DoesNotExist:
+        photo = None
+    all_stats = Status.objects.all()
+    for tut in tutorials:
+        tut.stats = []
+        tut_stats = all_stats.filter(tutorial_id=tut.id)
+        for stat in tut_stats:
+            tut.stats.append(stat.user)
+
 
     for t in tutorials:
-        p = Photo.objects.get(user_id=t.user.id)
-        t.user_url = p.url
+        try:
+            p = Photo.objects.get(user_id=t.user.id)
+            t.user_url = p.url
+        except Photo.DoesNotExist:
+            p = None
+        
 
     context = {
         'urls': get_url_list(request),
@@ -65,6 +82,7 @@ def tutorials(request, category_name):
     }
     return render(request, 'main_app/tutorials.html' ,context)
 
+@login_required
 def new_tutorial(request):
     categories = Category.objects.all()
     url = ''
@@ -111,13 +129,32 @@ def new_tutorial(request):
 
 def tutorial_detail(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
-    photo = Photo.objects.get(user_id=tutorial.user.id)
+    comments = Comment.objects.filter(tutorial_id=tutorial_id)
+    for comment in comments:
+        try:
+            comment.user_url = Photo.objects.get(user_id=comment.user).url
+        except Photo.DoesNotExist:
+            comment.user_url = None
+
+    stats_list = []
+    try:
+        stats = Status.objects.filter(stats='S',tutorial_id=tutorial.id)
+        for stat in stats:
+            stats_list.append(stat.user)
+    except Status.DoesNotExist:
+        stats = None
+    try:
+        photo = Photo.objects.get(user_id=tutorial.user.id)
+    except Photo.DoesNotExist:
+        photo = None
     tutorial_form = TutorialForm()
     context = {
         'tutorial': tutorial, 
         'tutorial_form': tutorial_form,
         'photo': photo,
         'urls': get_url_list(request),
+        'stats': stats_list,
+        'comments': comments,
         }
     print(f"This is the tutorial: {tutorial}")
     return render(request, 'main_app/tutorial_detail.html', context)
@@ -125,16 +162,14 @@ def tutorial_detail(request, tutorial_id):
 
 
 def categories(request):
-    return render(request=request,
-     template_name="main_app/categories.html",
-     context={"categories": Category.objects.all})
-
-
-def add_categories(request):    
-    new_cat = Category.objects.get(id=Category_id)
-    if request.method == 'POST':
-
-
+    categories = Category.objects.all()
+    context = {
+        'urls': get_url_list(request),
+        'title': 'Categories',
+        'categories': categories,
+        
+    }
+    return render(request, 'main_app/categories.html' , context)
 
 def about(request):
     context = {
@@ -163,6 +198,9 @@ def sign_up(request):
     }
     return redirect('homepage')
 
+
+
+@login_required
 def add_photo(request, user_id):
     photo_file = request.FILES.get('photo-file', None) 
     
@@ -184,8 +222,9 @@ def add_photo(request, user_id):
             print('An error occured uploading file e to S3')
     return redirect('user_profile')
 
-
+@login_required
 def edit_tutorial(request, tutorial_id):
+    
     tutorial = Tutorial.objects.get(id=tutorial_id)
     if request.method == 'POST':
         video_file = request.FILES.get('video')
@@ -202,8 +241,22 @@ def edit_tutorial(request, tutorial_id):
                 print('An error occured uploding file e to S3')
     # return redirect('tutorials')
         if request.POST['video_url'] != '':
-            tutorial.video_url = request.POST['video_url']
+            v_url = request.POST['video_url']
+            if 'youtube' in v_url:
+                for index,letter in enumerate(v_url):
+                    if letter == '=':
+                        v_url = v_url[index+1:]
+                        print(v_url)
+                        break
+                url = f'https://youtube.com/embed/{v_url}'
+            else:
+                url = request.POST['video_url']
+            
+                          
 
+        if not request.FILES and not request.POST['video_url']:
+            url = ''
+        tutorial.video_url = url
         category = Category.objects.get(id=request.POST['category'])
         tutorial.title = request.POST['title']
         tutorial.content = request.POST['content']
@@ -221,6 +274,8 @@ def edit_tutorial(request, tutorial_id):
     }
     return render(request, 'main_app/edit_tutorial.html', context)
 
+
+@login_required
 def delete_tutorial(request, tutorial_id):
     Tutorial.objects.get(id=tutorial_id).delete()
     return redirect('/user/')
@@ -231,9 +286,53 @@ def saved_tutorials(request):
     context = {'stats': stats}
     return render(request, 'main_app/saved_tutorials.html', context)
 
-def save_tutorial(request):
-    return redirect('/user/')
+@login_required
+def save_tutorial(request, tutorial_id):
+    prev_url = request.META.get('HTTP_REFERER')
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    status = Status()
+    status.tutorial = tutorial
+    status.user = request.user
+    status.stats = "S"
+    status.save()
+    return redirect(prev_url)
 
+
+
+@login_required
+def unsave_tutorial(request,tutorial_id):
+    print('do some things here')
+
+
+@login_required
+def add_comment(request, tutorial_id):
+    prev_url = request.META.get('HTTP_REFERER')
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    comment = Comment(content=request.POST['content'],tutorial=tutorial,user=request.user)
+    comment.save()
+    return redirect(prev_url)
+
+@login_required
+def add_category(request):
+    prev_url = request.META.get('HTTP_REFERER')
+    cat_name = request.POST['name']
+    
+    cat_photo_file = request.FILES.get('photo_url',None)
+    
+    url = ''
+    print('url before upload',url)
+    if cat_photo_file:
+        s3 = boto3.client('s3')
+        key = uuid.uuid4().hex[:6] + cat_photo_file.name[cat_photo_file.name.rfind('.'):]
+        try:
+            s3.upload_fileobj(cat_photo_file, BUCKET, key)
+            url = f"{S3_BASE_URL}{BUCKET}/{key}"
+        except:
+            print('An error occured uploading file e to S3')
+    category = Category(name=cat_name,photo_url=url)
+    category.save()
+    return redirect(prev_url)
+    
 
 
 
@@ -259,9 +358,3 @@ def save_tutorial(request):
 #             print('An error occured uploding file e to S3')
 #     return redirect('tutorials')
     
-
-
-
-
-
-

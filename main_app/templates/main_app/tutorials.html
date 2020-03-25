@@ -1,32 +1,51 @@
-{% extends 'base_min.html' %}
+{% extends 'base_min.html' %} {% block content %}
+<h2 class="center">{{category.name}}</h2>
+<div class="row">
+    {% for t in tutorials %}
+    <div class="col s4">
+        <div class="card">
+            <div class="card-image">
+                <img src="{{t.user_url}}" alt="tutorial image"> {% if user.id == t.user.id %}
+
+                <div class="right">
+                    <a href="" class="btn-floating grey right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
+                </div>
+
+                {% elif user in t.stats %}
+
+                <div class="right">
+                    <a href="{% url 'unsave_tutorial' t.id%}" class="btn-floating grey right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
+                </div>
 
 
-{% block content %}
-    <h2 class="center">{{category.name}}</h2>
-    <div class="row">
-        {% for t in tutorials %}
-            <div class="col s4">
-                <div class="card">
-                    <div class="card-image">
-                        <img src="{{t.user_url}}" alt="tutorial image">
-                        <a href="#" class="btn-floating pink right halfway-fab waves-effect waves-light">
-                            <i class="material-icons">favorite</i>
-                        </a>
-                    </div>
-                    <div class="card-content">
-                        <a href="{% url 'detail' t.id%}">
-                        <span class="card-title">{{ t.title }}</span>
-                    </a>
-                        <div class="chip">
-                            <img src="{{t.user_url}}" alt="Contact Person">
-                            {{ t.user }}
-                        </div>
-                    </div>
-                    <div class="card-action">
-                        <a href="{% url 'detail' t.id%}" class="btn waves-effect waves-light">View Tutorial</a>
-                    </div>
+                {% else %}
+                <div class="right">
+                    <a href="{% url 'save_tutorial' t.id%}" class="btn-floating pink right waves-effect waves-light tooltipped halfway-fab" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
+                </div>
+
+
+
+                {% endif %}
+            </div>
+            <div class="card-content">
+                <a href="{% url 'detail' t.id%}">
+                    <span class="card-title">{{ t.title }}</span>
+                </a>
+                <div class="chip">
+                    <img src="{{t.user_url}}" alt="Contact Person"> {{ t.user }}
                 </div>
             </div>
-        {% endfor %}
+            <div class="card-action">
+                <a href="{% url 'detail' t.id%}" class="btn waves-effect waves-light">View Tutorial</a>
+            </div>
+        </div>
     </div>
-{% endblock  %}
+    {% endfor %}
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.tooltipped');
+        var instances = M.Tooltip.init(elems);
+    });
+</script>
+{% endblock %}

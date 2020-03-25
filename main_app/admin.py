@@ -7,4 +7,3 @@ admin.site.register(Video)
 admin.site.register(Comment)
 admin.site.register(Category)
 admin.site.register(Status)
-
