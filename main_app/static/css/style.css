@@ -2,8 +2,8 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-
 }
+
 main {
   flex: 1 0 auto;
 }
@@ -118,15 +118,12 @@ main {
 }
 
 #user_profile_form{
-  /* display: none; */
   transition: 0.2s linear;
 }
 
-#footer{
-  
+#footer{  
   right: 0;
   height: 30px;
-  
 }
 
 #tutorial_content{
@@ -134,18 +131,17 @@ main {
   overflow-x: hidden;
   max-height: 1000px;
 }
+
+
 #video_player{
-
+  margin-right: 0;
   max-height: 400px;
-
 }
-
 
 #comment_row{
   margin-top: 250px;
   
 }
-
 
 .container {
   margin: 0 auto;
@@ -160,6 +156,7 @@ main {
   max-width: 1980px;
   width: 90%;
 }
+
 @media only screen and (min-width: 601px) {
   .container {
     width: 85%;
@@ -168,11 +165,14 @@ main {
     margin-top: 0;
   }
 }
+
 @media only screen and (min-width: 993px) {
   .container {
     width: 70%;
   }
+
   #comments_wrapper{
+
     margin-top: 0;
     
   }
@@ -180,6 +180,7 @@ main {
     margin-top: 100px;
     
   }
+
   #comments_container{
     margin-top: 0;
     
@@ -189,43 +190,33 @@ main {
     margin-top: 100px;
    
   }
+
   #comment_row{
     margin-top: 0;
   }
+
+
   #test-row{
     max-height: 400px;
   }
  
+
 }
 
 #comments_container{
   max-height: 515px;
-
-  overflow-y: scroll;
-  
-  
+  overflow-y: scroll;  
 }
 #comments_container-min{
   max-height: 890px;
   
+
   overflow-y: scroll;
-  
-  
 }
 
 
- /* #comments_wrapper{
-
-#comments_wrapper-min{
-  
-  margin-top: 0px;
-  
-  
-  
-} */
-
-
  #blank_chip{
+
   float: left;
   height: 32px;
   width: 32px;
@@ -233,9 +224,7 @@ main {
 } 
 
 #comment_form{
-  width: 90%;
-  
-  
+  width: 90%; 
 }
 
 #comment_button{
@@ -243,6 +232,7 @@ main {
   height: 3.55rem;
   width: 10%;
 }
+
 .comment_card{
   padding: 10px;
 }
