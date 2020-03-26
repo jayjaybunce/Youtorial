@@ -16,7 +16,7 @@ class CreateUserForm(UserCreationForm):
 
 
 class TutorialForm(forms.ModelForm):
-    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows':50,'class': 'form-control'}))
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows':50,'class': 'form-control'}),required=False)
     category = forms.ModelChoiceField(queryset=Category.objects.all(),widget=forms.Select(attrs={'class':'btn'}))
     video = forms.FileField(required=False)
     video_url = forms.CharField(required=False)

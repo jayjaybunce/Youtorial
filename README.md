@@ -45,5 +45,8 @@ User Profile Page
 
 ## Deployment
 *(https://youtorials.herokuapp.com/user//)
+*(https://trello.com/b/QrcG9Mte/project-3)
+*(https://docs.google.com/presentation/d/19zEU3bExnJVvkklwoBY03tyhO_nG7bHhOA_b78741qY/edit#slide=id.gc6f73a04f_0_0)
+
 
                             
