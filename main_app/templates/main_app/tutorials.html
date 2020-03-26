@@ -1,4 +1,3 @@
-
 {% extends 'base_min.html' %}
 
 
@@ -45,32 +44,15 @@
                         {% endif %}
                         
                     </div>
-
-                </div>
-
-
-
-                {% endif %}
-            </div>
-            <div class="card-content">
-                <a href="{% url 'detail' t.id%}">
-                    <span class="card-title">{{ t.title }}</span>
-                </a>
-                <div class="chip">
-                    <img src="{{t.user_url}}" alt="Contact Person"> {{ t.user }}
                 </div>
             </div>
-            <div class="card-action">
-                <a href="{% url 'detail' t.id%}" class="btn waves-effect waves-light">View Tutorial</a>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.tooltipped');
-        var instances = M.Tooltip.init(elems);
-    });
-</script>
-{% endblock %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.tooltipped');
+            var instances = M.Tooltip.init(elems);
+        });
+    
+    </script>
+{% endblock  %}
