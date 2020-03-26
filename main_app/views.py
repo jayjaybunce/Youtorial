@@ -374,8 +374,8 @@ def add_rating(request, tutorial_id):
     prev_url = request.META.get('HTTP_REFERER')
 
     value_list = request.POST.keys()
-    value = list(value_list)[0]
-    
+    value = list(value_list)[1]
+    print(request.POST)
     tutorial = Tutorial.objects.get(id=tutorial_id)
     rating = Rating(user=request.user,tutorial_id=tutorial.id,value=value)
     rating.save()
