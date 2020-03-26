@@ -21,6 +21,7 @@ urlpatterns = [
     path('tutorials/<int:tutorial_id>/comment/', views.add_comment, name='add_comment'),
     path('tutorials/<int:tutorial_id>/complete/', views.complete_tutorial, name='complete_tutorial'),
     path('categories/new',views.add_category, name='add_category'),
+    path('tutorials/<int:tutorial_id>/ratings/new/', views.add_rating, name='add_rating'),
     
     
     

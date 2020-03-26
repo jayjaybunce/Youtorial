@@ -7,7 +7,7 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .utils import get_url_list
 from .forms import TutorialForm
-from .models import Photo, Category, Tutorial, Video, Status, Comment
+from .models import Photo, Category, Tutorial, Video, Status, Comment, Rating
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -127,6 +127,13 @@ def new_tutorial(request):
 def tutorial_detail(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
     comments = Comment.objects.filter(tutorial_id=tutorial_id)
+    ratings = Rating.objects.filter(tutorial_id=tutorial_id)
+    try:
+        user_has_rated = Rating.objects.get(tutorial_id=tutorial_id,user=request.user)
+
+    except:
+        user_has_rated = None
+    
     for comment in comments:
         try:
             comment.user_url = Photo.objects.get(user_id=comment.user).url
@@ -157,6 +164,8 @@ def tutorial_detail(request, tutorial_id):
         'stats': stats_list,
         'completed': completed_list,
         'comments': comments,
+        'ratings': ratings,
+        'user_has_rated': user_has_rated,
         }
     print(f"This is the tutorial: {tutorial}")
     return render(request, 'main_app/tutorial_detail.html', context)
@@ -344,6 +353,20 @@ def add_category(request):
     category = Category(name=cat_name,photo_url=url)
     category.save()
     return redirect(prev_url)
+
+
+def add_rating(request, tutorial_id):
+    prev_url = request.META.get('HTTP_REFERER')
+
+    value_list = request.POST.keys()
+    value = list(value_list)[0]
+    
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    rating = Rating(user=request.user,tutorial_id=tutorial.id,value=value)
+    rating.save()
+    return redirect(prev_url)
+
+
     
 
 

@@ -376,3 +376,8 @@ main {
   box-shadow: 0 0 0 2px #00C0D3, inset 0 0 0 5px #333;
 }
  
+.rating_fieldset{
+  border: none;
+  margin: 0;
+  padding: 0;
+}
