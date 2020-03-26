@@ -1,40 +1,46 @@
-{% extends 'base_min.html' %} {% block content %} {% load static %}
-<h1>Categories</h1>
-<div class="row">
-    <div class="col l4">
-    </div>
-    <div class="center col l4">
-        <h5>Don't See a Category? Create One!</h5>
-        <div class="card" style="padding:10px">
-            <form action="{% url 'add_category' %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <button type="submit" class="btn right"><i class="material-icons">send</i></button>
+{% extends 'base_min.html' %}
 
-                <input type="text" name="name" style="width:80px;">
-                <br>
-                <label for="photo_url">Upload Photo</label>
-                <input type="file" name="photo_url">
-            </form>
+
+{% block content %}
+    {% load static %}
+    <h1>Categories</h1>
+    <div class="row">
+        <div class="col l4">
+        </div>
+        <div class="center col l4">
+            <h5>Don't See a Category? Create One!</h5>
+            <div class="card" style="padding:10px">
+                <form action="{% url 'add_category' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button type="submit" class="btn right"><i class="material-icons">send</i></button>
+                    
+                    <input type="text" name="name" style="width: 80%;%">
+                    <br>
+                    <label for="photo_url">Upload Photo</label>
+                    <input type="file" name="photo_url">
+                </form>
+            </div>
+        </div>
+        <div class="col l4">
         </div>
     </div>
-    <div class="col l4">
-    </div>
-</div>
-<div class="row">
-    {% for category in categories %}
-    <div class="col l3 12 m6">
-        <div class="card category_photo">
-            <div class="card-image category_photo">
+    <div class="row">
+        {% for category in categories %}
+        <div class="col l3 12 m6">
+            <div class="card category_photo">
+                <div class="card-image category_photo" >
                 {% if category.photo_url %}
-                <img src="{{ category.photo_url }}"> {% else %}
-                <img src="{% static 'images/logo_whitebg.png'%}"> {% endif %}
+                    <img src="{{ category.photo_url }}">
+                {% else %}
+                    <img src="{% static 'images/logo_whitebg.png'%}">
+                {% endif %}
                 <span class="card-title"><h5 class="cat-title">{{ category.name }}</h5></span>
                 <a href="{% url 'tutorials' category.name%}" class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons cyan lighten-1">pageview</i></a>
+                </div>
+                
             </div>
-
-        </div>
     </div>
-    {% endfor %}
-</div>
-
-{% endblock %}
+        {% endfor %}
+    </div>
+    
+{% endblock  %}
