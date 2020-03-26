@@ -8,3 +8,15 @@ def get_url_list(request):
     return urls
 
 
+def get_average(ratings):
+    
+    try:
+        count = 0
+        sum_ratings = 0
+        for r in ratings:
+            count += 1
+            sum_ratings += r.value
+        return str(round(sum_ratings/count))
+    except ZeroDivisionError:
+        return None
+

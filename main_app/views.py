@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.postgres.search import SearchVector
-from .utils import get_url_list
+from .utils import get_url_list, get_average
 from .forms import TutorialForm
 from .models import Photo, Category, Tutorial, Video, Status, Comment, Rating
 from django.http import HttpResponse
@@ -32,8 +32,21 @@ def homepage(request):
 @login_required
 def user_profile(request):
     stats = Status.objects.filter(user=request.user)
+    tutorials = Tutorial.objects.filter(user=request.user)
     completed_stats = stats.filter(stats="C")
     saved_stats = stats.filter(stats="S")
+    avg_rating = {'count': 0, 'sum': 0}
+    for tutorial in tutorials:
+        tutorial.ratings = Rating.objects.filter(tutorial_id=tutorial.id)
+        tutorial.avg_rating = get_average(Rating.objects.filter(tutorial_id=tutorial.id))
+        for rating in tutorial.ratings:
+            avg_rating['count'] += 1
+            avg_rating['sum'] += rating.value
+
+    try:
+        request.user.avg_rating = avg_rating['sum']/avg_rating['count']
+    except ZeroDivisionError:
+        request.user.avg_rating = None
     try:
         photo = Photo.objects.get(user=request.user)
     except:
@@ -42,7 +55,7 @@ def user_profile(request):
         'urls': get_url_list(request),
         'title': 'User',
         'photo': photo,
-        'tutorials': Tutorial.objects.filter(user=request.user),
+        'tutorials': tutorials,
         'completed_stats': completed_stats,
         'saved_stats': saved_stats,
     }
@@ -51,6 +64,9 @@ def user_profile(request):
 def tutorials(request, category_name):
     category = Category.objects.get(name=category_name)
     tutorials = Tutorial.objects.filter(category=category.id).order_by('title')
+    for tutorial in tutorials:
+        tutorial.ratings = Rating.objects.filter(tutorial_id=tutorial.id)
+        tutorial.avg_rating = get_average(Rating.objects.filter(tutorial_id=tutorial.id))
     try:
         photo = Photo.objects.get(user_id=request.user.id)
     except Photo.DoesNotExist:
@@ -126,6 +142,7 @@ def tutorial_detail(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
     comments = Comment.objects.filter(tutorial_id=tutorial_id)
     ratings = Rating.objects.filter(tutorial_id=tutorial_id)
+    tutorial.avg_rating = get_average(ratings)
     try:
         user_has_rated = Rating.objects.get(tutorial_id=tutorial_id,user=request.user)
 

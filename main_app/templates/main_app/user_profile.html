@@ -39,7 +39,7 @@
         <hr>
         <h6>Last Login: {{user.last_login|date:"M d, Y"}}</h6>
         <h6>Member Since: {{user.date_joined|date:"M d, Y"}}</h6>
-        <h6>Creator Rating: {{user.rating}}</h6>
+        <h6>Creator Rating: {% if user.avg_rating %}{{user.avg_rating}}{% else %}No Ratings Yet{% endif %}</h6>
       </div>
     </div>
   </div>
@@ -101,6 +101,11 @@
                 <br>
                 <a href="{% url 'detail' tutorial.id %}"><button class="btn right tooltipped blue lighten-1" data-position="right" data-tooltip="View"><i class="material-icons">pageview</i></button></a>
               </div>
+              {% if tutorial.avg_rating %}
+                <span style="margin-left: 10px">Rating: {{ tutorial.avg_rating }}</span>
+              {% else %}
+                <span style="margin-left: 10px">No Ratings Yet</span>
+              {% endif %}
             </div>
             </div>
           {% endfor %}
