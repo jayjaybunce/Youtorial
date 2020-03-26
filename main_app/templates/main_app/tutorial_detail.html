@@ -1,5 +1,5 @@
-
 {% extends 'base_min.html' %}
+
 {% block content %}
     <h2 class="center">{{ tutorial.title }}</h2>
     {% if tutorial.video_url %}
@@ -8,50 +8,16 @@
                 {% if 'youtube' in tutorial.video_url%}
                 <div class="iframe-container">
                   <iframe height="252" width="448" src="{{tutorial.video_url}}">
-
                   </iframe>
-        </div>
-        {% else %}
-        <video id="video_player" class="responsive-video" controls>
+                </div>
+                {% else %}
+                  <video id="video_player" class="responsive-video" controls>
                   <source src="{{ tutorial.video_url }}" type="video/mp4">
                   <source src="{{ tutorial.video_url }}" type="video/ogg">
                 Your browser does not support the video tag.
-                </video> {% endif %}
-
-    </div>
-
-    <div class="col l6 s12 left">
-        <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
-            <div class="chip">
-                <img src="{{photo.url}}" alt=""> {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
-            </div>
-            {% if user.id == tutorial.user.id %}
-
-            <div class="right">
-                <a href="" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
-            </div>
-
-            {% elif user in stats %}
-
-            <div class="right">
-                <a href="{% url 'unsave_tutorial' tutorial.id%}" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
-            </div>
-
-
-            {% else %}
-            <div class="right">
-                <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
-            </div>
-
-
-
-            {% endif %}
-
-            <hr>
-            <div id="tutorial_content">
-                <p class="textwrap" style="word-wrap: break-word;"> {{ tutorial.content | safe}}</p>
-            </div>
-
+                </video>
+                {% endif %}
+                
         </div>
         
       <div class="col l6 s12 left">
@@ -184,14 +150,20 @@
         </div>
       <div class="col l12 s12 right" id="comments_container">
         {% for comment in comments %}
-        <div class="card comment_card">
+          <div class="card comment_card" >
             <div class="chip">
-                {% if comment.user_url %}
-                <img src="{{comment.user_url}}"> {{ comment.user.first_name }} {{ comment.user.last_name }} {% else %}
-
-                <i class="material-icons circle blue center" id="blank_chip">person</i> {{comment.user.first_name}} {{comment.user.last_name}} {% endif %}
+              {% if comment.user_url %}
+                <img src="{{comment.user_url}}">
+                {{ comment.user.first_name }} {{ comment.user.last_name }} 
+              {% else %}
+                
+                  <i class="material-icons circle blue center" id="blank_chip">person</i>
+                  {{comment.user.first_name}} {{comment.user.last_name}}
+              {% endif %}
             </div>
-            {{ comment.content }}
+          {{ comment.content }}
+          </div>
+        {% endfor %}
         </div>
       </div>
     </div>

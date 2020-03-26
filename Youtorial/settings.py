@@ -79,12 +79,7 @@ WSGI_APPLICATION = 'Youtorial.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'youtorial',
-        'USER': 'postgres',
-        'PASSWORD': 'Cunch1p4123',
-        'HOST': 'localhost',
-        'PORT': '5432',
-
+        'NAME': 'youtorial',    
     }
 }
 

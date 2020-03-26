@@ -1,73 +1,81 @@
-{% extends 'base.html' %} {% block content %}
-<br>
-<main class="container">
-    <div class="row">
-        <div class="col s12">
-            <h2>Youtorial</h2>
-            <br>
-            <h4>Learn what you want, when you want to</h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col s12">
-            Welcome to free, user driven learning. Built for those who who love to help others learn and for those that want to learn more. Create an account to save any tutorials you want to check out later, give creators feedback on their content or to ask questions.
-            Anyone can create a tutorial, whatever you have to teach, someone wants to learn! Enjoy your time on Youtorial! There's always something to learn and to find passion in.
-        </div>
-    </div>
+{% extends 'base.html' %}
+
+
+{% block content %}
     <br>
-    <br>
-    <div class="row">
-        <div class="col s5">
-            <div class="col s10">
+    <main class="container">
+        <div class="row">
+            <div class="col s12">
+                <h2>Youtorial</h2>
+                <br>
+                <h4>Learn what you want, when you want to</h4>
+            </div>  
+        </div>
+        <div class="row">
+            <div class="col s12">
+                Welcome to free, user driven learning. Built for those who who love to help others learn and for those that want to learn more.
+                Create an account to save any tutorials you want to check out later, give creators feedback on their content or to ask questions.
+                Anyone can create a tutorial, whatever you have to teach, someone wants to learn! Enjoy your time on Youtorial! 
+                There's always something to learn and to find passion in.
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            <div class="col s5">
+                <div class="col s10">
                 <h2>Login</h2>
-                {% if user.is_authenticated %} logged in as {{user.username}} {% endif %} {% if error_message%}
+                {% if user.is_authenticated %}
+                    logged in as {{user.username}}
+                {% endif %}
+                {% if error_message%}
                 <p>{{ error_message }}</p>
                 {% endif %}
-                <form action="accounts/login/" method="POST">
-                    {% csrf_token %}
-                    <label for="username">Username:</label>
-                    <br>
-                    <input name="username" type="text" placeholder="Username">
-                    <br>
-                    <label for="password">Password:</label>
-                    <br>
-                    <input type="password" placeholder="Password">
-                    <input type="submit" value="Login" class="btn col s12 light-blue darken-1">
-                </form>
+                    <form action="accounts/login/" method="POST">
+                        {% csrf_token %}
+                        <label for="username">Username:</label>
+                        <br>
+                        <input name="username" type="text" placeholder="Username">
+                        <br>
+                        <label for="password">Password:</label>
+                        <br>
+                        <input type="password" placeholder="Password">
+                        <input type="submit" value="Login" class="btn col s12 light-blue darken-1">
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="right col s5">
-            <div class="col s10">
+            <div class="right col s5">
+                <div class="col s10">
                 <h2>Sign-Up</h2>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <label for="username">Username:</label>
-                    <input name="username" type="text" placeholder="Username">
-                    <label for="email">Email Address:</label>
-                    <input name="username" type="text" placeholder="Email">
-                    <label for="first_name">First Name:</label>
-                    <input name="first_name" type="text" placeholder="First Name">
-                    <label for="last_name">Last Name:</label>
-                    <input name="last_name" type="text" placeholder="Last Name">
-                    <label for="password1">Password:</label>
-                    <input type="password" placeholder="Password" name="password1">
-                    <label for="password2">Confirm Password:</label>
-                    <input type="password" name="password2" placeholder="Confirm Password">
-                    <input type="submit" value="Sign Up" class="btn col s12 light-blue darken-1">
-
-
-                </form>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <label for="username">Username:</label>
+                        <input name="username" type="text" placeholder="Username">
+                        <label for="email">Email Address:</label>
+                        <input name="username" type="text" placeholder="Email">
+                        <label for="first_name">First Name:</label>
+                        <input name="first_name" type="text" placeholder="First Name">
+                        <label for="last_name">Last Name:</label>
+                        <input name="last_name" type="text" placeholder="Last Name">
+                        <label for="password1">Password:</label>
+                        <input type="password" placeholder="Password" name="password1">
+                        <label for="password2">Confirm Password:</label>
+                        <input type="password" name="password2" placeholder="Confirm Password">
+                        <input type="submit" value="Sign Up" class="btn col s12 light-blue darken-1">
+                        
+                        
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-</main>
-{% endblock %}
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </main>
+{% endblock  %}

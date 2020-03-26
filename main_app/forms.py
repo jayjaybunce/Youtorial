@@ -23,3 +23,12 @@ class TutorialForm(forms.ModelForm):
     class Meta:
         model = Tutorial
         fields = ['title','content','language','category','video_url']
+        
+
+        
+
+
+
+    
+
+
