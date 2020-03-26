@@ -8,6 +8,7 @@ urlpatterns = [
     path('tutorials/categories/<str:category_name>/', views.tutorials, name='tutorials'),
     path('tutorials/<int:tutorial_id>/', views.tutorial_detail, name='detail'),
     path('categories/', views.categories, name='categories'),
+    path('search/', views.search, name='search'),
     path('tutorials/new/', views.new_tutorial, name='new_tutorial'),
     path('tutorials/saved/', views.saved_tutorials, name='saved_tutorials'),
     path('about/', views.about, name='about'),
@@ -19,7 +20,9 @@ urlpatterns = [
     path('tutorials/<int:tutorial_id>/save/', views.save_tutorial, name='save_tutorial'),
     path('tutorials/<int:tutorial_id>/unsave/', views.unsave_tutorial, name='unsave_tutorial'),
     path('tutorials/<int:tutorial_id>/comment/', views.add_comment, name='add_comment'),
+    path('tutorials/<int:tutorial_id>/complete/', views.complete_tutorial, name='complete_tutorial'),
     path('categories/new',views.add_category, name='add_category'),
+    path('tutorials/<int:tutorial_id>/ratings/new/', views.add_rating, name='add_rating'),
     
     
     

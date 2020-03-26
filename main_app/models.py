@@ -72,3 +72,4 @@ class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     value = models.IntegerField()
+

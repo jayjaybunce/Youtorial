@@ -1,7 +1,9 @@
-{% extends 'base_min.html' %} {% block content %}
+
+{% extends 'base_min.html' %}
+
+{% block content %}
 
 <h2 class="center profile-title">{{user.username}}'s Profile Page</h2>
-
 <div class="row cyan lighten-3">
     <div class="col s12 l3 center">
         <div class="col s12 left">
@@ -32,92 +34,115 @@
                 </form>
                 {% endif %}
             </div>
-        </div>
-        <div class="col s12 left">
-            <div class="card grey user-info white-text">
-                <h4 class="username">{{user.username}}</h4>
-                <hr>
-                <h6>Last Login: {{user.last_login}}</h6>
-                <h6>Member Since: {{user.date_joined}}</h6>
-                <!-- {% if user.rating == '' %}
-          <h6>No Rating</h6>
-        {% else %} -->
-                <h6>Creator Rating: {{user.rating}}</h6>
-                <!-- {% endif %} -->
-            </div>
-        </div>
+            <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text">
+              {% csrf_token %}
+              <input type="file" name="photo-file">
+              <br><br>
+              <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+                <input type="submit" class="btn" value="Upload Photo">
+              </a>
+            </form>   
+          {% elif user.photo_set.first %}
+            <img class="profile-pic" src="{{photo.url}}">
+            <br>
+            <button class="btn-flat wave grey lighten-1 white-text" id="upload_show_button">Upload New Pic</button>
+            <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text" id="user_profile_form">
+              {% csrf_token %}
+              <input type="file" name="photo-file">
+              <br><br>
+              <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+                <input type="submit" class="btn truncate" value="Upload Photo">
+              </a>
+            </form>   
+          {% endif %}    
+      </div>
     </div>
-    <div class="col s12 l9 right">
-        <div class="col s12 completed-tutorial">
-            <div class="card grey white-text card-panel">
-                <h4 class="card-title tut-title">Completed Tutorials</h4>
-                <hr> {% for stat in completed_stats %}
-                <div>
-                    <p>{{tutorial}}</p>
+    <div class="col s12 left">
+      <div class="card grey user-info white-text">
+        <h4 class="username">{{user.username}}</h4>
+        <hr>
+        <h6>Last Login: {{user.last_login|date:"M d, Y"}}</h6>
+        <h6>Member Since: {{user.date_joined|date:"M d, Y"}}</h6>
+        <h6>Creator Rating: {% if user.avg_rating %}{{user.avg_rating}}{% else %}No Ratings Yet{% endif %}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 l9 right">
+    <div class="col s12">
+      <div class="card grey white-text card-panel completed-tutorial">
+        <h4 class= "card-title tut-title">Completed Tutorials</h4>
+        <hr>
+        <div class="card-scroll">
+          {% for stat in completed_stats %}
+              <a href="{% url 'detail' stat.tutorial.id %}">
+                <div class="card col s3 m3 l2 comp-card z-depth-2"> 
+                  <p class="left truncate">{{stat.tutorial.title}}</p>
                 </div>
-                {% endfor %}
-            </div>
+              </a>
+          {% endfor %}
         </div>
-        <div class="col s12 l6">
-            <div class="card grey white-text card-panel">
-                <h5 class="tut-title">Saved Tutorials</h5>
-                <hr>
-                <div class="save-comp">
-                    {% for stat in saved_stats %}
-                    <div class="card black-text" style="padding: 10px">
-                        <div class="row">
-                            <div class="col s9">
-                                <p>{{stat.tutorial.user}}</p>
-                                <p>{{stat.tutorial.title}}</p>
-                            </div>
-                            <div class="col s3">
-                                <a href="{% url 'detail' stat.tutorial.id %}"><button class="btn right tooltipped blue lighten-1" data-position="right" data-tooltip="View"><i class="material-icons">pageview</i></button></a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
+      </div>
+    </div>
+      <div class="col s12 l6">
+        <div class="card grey white-text card-panel">
+          <h5 class= "tut-title">Saved Tutorials</h5>
+          <hr>
+          <div class="save-create">
+            {% for stat in saved_stats %}
+              <div class="card black-text" style="padding: 10px">
+                <div class="row">
+                  <div class="col s9">
+                    <p>{{stat.tutorial.user}}</p>
+                    <p>{{stat.tutorial.title}}</p>
+                  </div>
+                  <div class="col s3">
+                      <a href="{% url 'detail' stat.tutorial.id %}"><button class="btn right tooltipped blue lighten-1" data-position="right" data-tooltip="View"><i class="material-icons">pageview</i></button></a>
+                  </div>
+                </div> 
+              </div>
+            {% endfor %}
+          </div>
         </div>
-        <div class="col s12 l6">
-            <div class="card grey white-text card-panel inline">
-                <h5 class="tut-title">Created Tutorials</h5>
-                <hr>
-                <div class="save-comp">
-                    {% for tutorial in tutorials %}
-                    <div class="card black-text" style="padding: 10px">
-                        <div class="row">
-                            <div class="col s9">
-                                {{ tutorial.category }}
-                                <h6>{{ tutorial.title}}</h6>
-                            </div>
-                            <div class="col s3">
-
-                                <a href="{% url 'delete_tutorial' tutorial.id%}"><button class="btn red darken-4 right tooltipped" data-position="right" data-tooltip="Delete"><i class="material-icons">delete_forever</i></button>
-              <br>
-              <br>
-
-              <a href="{% url 'edit_tutorial' tutorial.id %}"><button class="btn right tooltipped" data-position="right" data-tooltip="Edit"><i class="material-icons">edit</i></button></a>
-                                <br>
-                                <br>
-                                <a href="{% url 'detail' tutorial.id %}"><button class="btn right tooltipped blue lighten-1" data-position="right" data-tooltip="View"><i class="material-icons">pageview</i></button></a>
-
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
+      </div>
+      <div class="col s12 l6">
+        <div class="card grey white-text card-panel inline">
+          <h5 class= "tut-title">Created Tutorials</h5>
+          <hr>
+          <div class="save-create">
+          {% for tutorial in tutorials %}
+            <div class="card black-text" style="padding: 10px">
+            <div class="row">
+              <div class="col s9">
+                {{ tutorial.category }}
+                <h6>{{ tutorial.title}}</h6>
+              </div>
+              <div class="col s3">
+                <a href="{% url 'delete_tutorial' tutorial.id%}"><button class="btn red darken-4 right tooltipped" data-position="right" data-tooltip="Delete"><i class="material-icons">delete_forever</i></button>
+                <br>
+                <br>
+                <a href="{% url 'edit_tutorial' tutorial.id %}"><button class="btn right tooltipped" data-position="right" data-tooltip="Edit"><i class="material-icons">edit</i></button></a>
+                <br>
+                <br>
+                <a href="{% url 'detail' tutorial.id %}"><button class="btn right tooltipped blue lighten-1" data-position="right" data-tooltip="View"><i class="material-icons">pageview</i></button></a>
+              </div>
+              {% if tutorial.avg_rating %}
+                <span style="margin-left: 10px">Rating: {{ tutorial.avg_rating }}</span>
+              {% else %}
+                <span style="margin-left: 10px">No Ratings Yet</span>
+              {% endif %}
             </div>
-
+            </div>
+          {% endfor %}
+          </div>
         </div>
+      </div>
     </div>
 </div>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.tooltipped');
-        var instances = M.Tooltip.init(elems);
-    });
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
 </script>
-
-{% endblock %}
+{% endblock  %} 
