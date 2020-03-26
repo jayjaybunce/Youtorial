@@ -1,10 +1,20 @@
-{% extends 'base_min.html' %}
+{% extends 'base_min.html' %} {% block content %}
 
+<div class="container">
 
-{% block content %}
-
+    <h3 id="tutorial_title">Title Here</h3>
+    <br>
+    <br>
+    <br>
+    <form action="{% url 'new_tutorial'%}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %} {{ form.as_p}}
+        <a onclick="M.toast({html: 'Thanks For Creating A Tutorial!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+            <input type="submit" class="btn">
+        </a>
+    </form>
+</div>
+</div>
     <div class="container">
-     
         <h3 id="tutorial_title">Title Here</h3>
             <br>
             <br>
@@ -18,12 +28,10 @@
             </form>
     </div>
     </div>
+{% load static %}
 
-
-    {% load static %}
-   
-    <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
-    <script>
+<script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
+<script>
     tinyMCE.init({
 
         mode: "textareas",
@@ -33,9 +41,9 @@
         toolbar: 'undo redo styleselect bold italic alignleft aligncenter alignright bullist numlist outdent indent code',
         language: "{{ language }}",
         directionality: "{{ directionality }}",
-        spellchecker_languages : "{{ spellchecker_languages }}",
-        spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
+        spellchecker_languages: "{{ spellchecker_languages }}",
+        spellchecker_rpc_url: "{{ spellchecker_rpc_url }}"
     });
-    </script>
-   
-{% endblock  %}
+</script>
+
+{% endblock %}

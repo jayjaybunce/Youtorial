@@ -73,14 +73,3 @@ class Rating(models.Model):
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
     value = models.IntegerField()
 
-
-
-
-
-
-    
-
-
-
-
-
