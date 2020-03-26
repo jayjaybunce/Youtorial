@@ -21,12 +21,14 @@
                       <div class="col s12 " >
                         <div class="row" id="topbarsearch">
                           <div class="input-field col s6 s12">
-                            <i class="material-icons prefix">search</i>
-                            <input type="text" placeholder="search" id="autocomplete-input" class="autocomplete white-text" >
-                            </div>
+                            <form action="{% url 'search' %}" method="GET">
+                              <i class="material-icons prefix">search</i>
+                              <input type="text" name="q" placeholder="search" id="autocomplete-input" class="autocomplete white-text" value="{{request.GET.query}}">
+                            </form>
                           </div>
                         </div>
-                      </div>          
+                      </div>
+                    </div>          
                   </li>
                 {% if user.is_authenticated %}
                   <li><a href="accounts/logout/">Logout</a></li>
