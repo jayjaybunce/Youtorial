@@ -132,13 +132,15 @@ main {
   max-height: 1000px;
 }
 
+
 #video_player{
   margin-right: 0;
+  max-height: 400px;
 }
 
 #comment_row{
   margin-top: 250px;
-  height: auto;
+  
 }
 
 .container {
@@ -170,29 +172,56 @@ main {
   }
 
   #comments_wrapper{
-    margin-top: -17%;  
+
+    margin-top: 0;
+    
+  }
+  #comments_wrapper-min{
+    margin-top: 100px;
+    
   }
 
   #comments_container{
-    margin-top: -13%; 
+    margin-top: 0;
+    
+   
+  }
+  #comments_container-min{
+    margin-top: 100px;
+   
   }
 
   #comment_row{
     margin-top: 0;
   }
+
+
+  #test-row{
+    max-height: 400px;
+  }
+ 
+
 }
 
 #comments_container{
   max-height: 515px;
+  overflow-y: scroll;  
+}
+#comments_container-min{
+  max-height: 890px;
+  
+
   overflow-y: scroll;
 }
 
-#blank_chip{
+
+ #blank_chip{
+
   float: left;
   height: 32px;
   width: 32px;
   margin: 0 8px 0 -12px;
-}
+} 
 
 #comment_form{
   width: 90%; 
@@ -209,15 +238,15 @@ main {
 }
 
 .responsive-iframe{
-  height: 20vw;
-  width: 43vw;
+  height: 10vw;
+  width: 39vw;
 }
 
 .iframe-container{
   position: relative;
-  width: 100%;
-  padding-bottom: 56.25%;
-  height: 0;
+  width: 90%;
+  height: 400px;
+  
 }
 
 .iframe-container iframe{
@@ -243,9 +272,102 @@ main {
   width: 90%;
 }
 
+
 .truncate {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+#test-row{
+  
+}
+
+
+/*  
+ *  Pure CSS star rating that works without reversing order
+ *  of inputs
+ *  -------------------------------------------------------
+ *  NOTE: For the styling to work, there needs to be a radio
+ *        input selected by default. There also needs to be a
+ *        radio input before the first star, regardless of
+ *        whether you offer a 'no rating' or 0 stars option
+ *  
+ *  This codepen uses FontAwesome icons
+ */
+
+ .showcase{
+  position: relative;
+  display: inline;
+  
+  
+}
+.rating-system1,
+.rating-system2,
+.rating-system3,
+.rating-system4{
+  
+  margin: 0 auto;
+  display:inline-block;
+  position: relative;
+} 
+
+
+
+.showcase input{
+  display:none;
+}
+
+.showcase label{
+  float:right;
+  display:inline-block;
+  width:20px;
+  height:5px;
+  background:#ccc;
+  margin:4px;
+  position: relative;
+  transition:all .3s;
+}
+
+.rating-system2 label{
+  width:10px;
+  height:10px;
+  border-radius:100%; 
+  margin:0 10px;
+}
+
+.ratings-system2 label:before{display:none;}
+.rating-system2 label:hover ~ label,
+.rating-system2 label:hover
+{
+  box-shadow: 0 0 0 2px #00C0D3,
+              inset 0 0 0 5px #333;
+  
+} 
+
+.rating-system2 input:checked ~ label{
+  background:gold;
+  box-shadow: 0 0 0 2px gold;
+  
+}
+
+#rating_wrapper{
+  width: 250px;
+  float: left;
+  height: auto;
+}
+#rating_button{
+  display: block;
+  
+}
+
+.checked{
+  box-shadow: 0 0 0 2px #00C0D3, inset 0 0 0 5px #333;
+}
+ 
+.rating_fieldset{
+  border: none;
+  margin: 0;
+  padding: 0;
 }

@@ -18,19 +18,19 @@
                 <input type="submit" class="btn" value="Upload Photo">
               </a>
             </form>   
-          {% elif user.photo_set.first %}
-            <img class="profile-pic" src="{{photo.url}}">
-            <br>
-            <button class="btn-flat wave grey lighten-1 white-text" id="upload_show_button">Upload New Pic</button>
-            <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text" id="user_profile_form">
-              {% csrf_token %}
-              <input type="file" name="photo-file">
-              <br><br>
-              <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
-                <input type="submit" class="btn truncate" value="Upload Photo">
-              </a>
-            </form>   
-          {% endif %}    
+              {% elif user.photo_set.first %}
+                <img class="profile-pic" src="{{photo.url}}">
+                <br>
+                <button class="btn-flat wave grey lighten-1 white-text" id="upload_show_button">Upload New Pic</button>
+                <form action="{% url 'add_photo' user.id %}" enctype="multipart/form-data" method="POST" class="card-panel black-text" id="user_profile_form">
+                  {% csrf_token %}
+                  <input type="file" name="photo-file">
+                  <br><br>
+                  <a onclick="M.toast({html: 'You Have Updated Your Profile Pic!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
+                    <input type="submit" class="btn truncate" value="Upload Photo">
+                  </a>
+                </form>   
+              {% endif %}    
       </div>
     </div>
     <div class="col s12 left">
@@ -39,7 +39,7 @@
         <hr>
         <h6>Last Login: {{user.last_login|date:"M d, Y"}}</h6>
         <h6>Member Since: {{user.date_joined|date:"M d, Y"}}</h6>
-        <h6>Creator Rating: {{user.rating}}</h6>
+        <h6>Creator Rating: {% if user.avg_rating %}{{user.avg_rating}}{% else %}No Ratings Yet{% endif %}</h6>
       </div>
     </div>
   </div>
@@ -101,6 +101,11 @@
                 <br>
                 <a href="{% url 'detail' tutorial.id %}"><button class="btn right tooltipped blue lighten-1" data-position="right" data-tooltip="View"><i class="material-icons">pageview</i></button></a>
               </div>
+              {% if tutorial.avg_rating %}
+                <span style="margin-left: 10px">Rating: {{ tutorial.avg_rating }}</span>
+              {% else %}
+                <span style="margin-left: 10px">No Ratings Yet</span>
+              {% endif %}
             </div>
             </div>
           {% endfor %}
