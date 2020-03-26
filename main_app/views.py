@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.postgres.search import SearchVector
 from .utils import get_url_list
 from .forms import TutorialForm
-from .models import Photo, Category, Tutorial, Video, Status, Comment
+from .models import Photo, Category, Tutorial, Video, Status, Comment, Rating
 from django.http import HttpResponse
 import uuid
 import boto3
@@ -58,7 +58,7 @@ def tutorials(request, category_name):
     all_stats = Status.objects.all()
     for tut in tutorials:
         tut.stats = []
-        tut_stats = all_stats.filter(tutorial_id=tut.id)
+        tut_stats = all_stats.filter(tutorial_id=tut.id,stats='S')
         for stat in tut_stats:
             tut.stats.append(stat.user)
 
@@ -111,7 +111,7 @@ def new_tutorial(request):
         tut.user = request.user
         tut.video_url = url
         if tut_form.is_valid():
-            tut_form.save()
+            tut_form.save() 
         return redirect(f'/tutorials/{tut.id}')
     form = TutorialForm()
     context = {
@@ -125,6 +125,13 @@ def new_tutorial(request):
 def tutorial_detail(request, tutorial_id):
     tutorial = Tutorial.objects.get(id=tutorial_id)
     comments = Comment.objects.filter(tutorial_id=tutorial_id)
+    ratings = Rating.objects.filter(tutorial_id=tutorial_id)
+    try:
+        user_has_rated = Rating.objects.get(tutorial_id=tutorial_id,user=request.user)
+
+    except:
+        user_has_rated = None
+    
     for comment in comments:
         try:
             comment.user_url = Photo.objects.get(user_id=comment.user).url
@@ -155,6 +162,8 @@ def tutorial_detail(request, tutorial_id):
         'stats': stats_list,
         'completed': completed_list,
         'comments': comments,
+        'ratings': ratings,
+        'user_has_rated': user_has_rated,
         }
     print(f"This is the tutorial: {tutorial}")
     return render(request, 'main_app/tutorial_detail.html', context)
@@ -299,7 +308,10 @@ def save_tutorial(request, tutorial_id):
 
 @login_required
 def unsave_tutorial(request,tutorial_id):
-    print('do some things here')
+    prev_url = request.META.get('HTTP_REFERER')
+    status = Status.objects.get(user=request.user,tutorial_id=tutorial_id,stats='S')
+    status.delete()
+    return redirect(prev_url)
 
 @login_required
 def complete_tutorial(request, tutorial_id):
@@ -339,6 +351,20 @@ def add_category(request):
     category = Category(name=cat_name,photo_url=url)
     category.save()
     return redirect(prev_url)
+
+
+def add_rating(request, tutorial_id):
+    prev_url = request.META.get('HTTP_REFERER')
+
+    value_list = request.POST.keys()
+    value = list(value_list)[0]
+    
+    tutorial = Tutorial.objects.get(id=tutorial_id)
+    rating = Rating(user=request.user,tutorial_id=tutorial.id,value=value)
+    rating.save()
+    return redirect(prev_url)
+
+
     
 def search(request):
     tutorials = Tutorial.objects.annotate(
