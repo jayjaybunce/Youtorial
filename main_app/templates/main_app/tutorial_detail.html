@@ -10,13 +10,13 @@
                   <iframe height="252" width="448" src="{{tutorial.video_url}}">
 
                   </iframe>
-        </div>
-        {% else %}
-        <video id="video_player" class="responsive-video" controls>
-                  <source src="{{ tutorial.video_url }}" type="video/mp4">
-                  <source src="{{ tutorial.video_url }}" type="video/ogg">
-                Your browser does not support the video tag.
-                </video> {% endif %}
+                </div>
+                {% else %}
+                <video id="video_player" class="responsive-video" controls>
+                          <source src="{{ tutorial.video_url }}" type="video/mp4">
+                          <source src="{{ tutorial.video_url }}" type="video/ogg">
+                        Your browser does not support the video tag.
+                        </video> {% endif %}
 
     </div>
 
@@ -193,6 +193,7 @@
             </div>
             {{ comment.content }}
         </div>
+        {% endfor %}
       </div>
     </div>
     
