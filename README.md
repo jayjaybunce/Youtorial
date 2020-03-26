@@ -21,26 +21,26 @@ For this project, technologies implemented are:
 
 
 #  Entity Relationship Diagram
-![Image](https://imgur.com/Plepl1H)
+![Image](https://i.imgur.com/cDRy5iU.jpg)
 
 
 # Navigation
 Creating a new user
 
-![Image](https://imgur.com/hSPJols)
+![Image](https://i.imgur.com/OSteH5b.jpg)
 
 
 Search or create a category
 
-![Image](https://imgur.com/DNBjJ0Y)
+![Image](https://i.imgur.com/P8pf0sf.jpg)
 
 Creating a new tutorial
  
-![Image](https://imgur.com/2BUULKw)
+![Image](https://i.imgur.com/CBvQytx.jpg)
 
 User Profile Page
 
-![Image](https://imgur.com/JhWDmCf)
+![Image](https://i.imgur.com/bOMZl3P.jpg)
 
 
 ## Deployment
