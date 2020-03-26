@@ -369,7 +369,7 @@ def add_category(request):
     category.save()
     return redirect(prev_url)
 
-
+@login_required
 def add_rating(request, tutorial_id):
     prev_url = request.META.get('HTTP_REFERER')
 
