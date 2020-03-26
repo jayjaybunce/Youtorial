@@ -21,7 +21,13 @@
       <div class="col l6 s12 left">
         <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
           <div class="chip">
-            <img src="{{photo.url}}" alt="">                    
+            {% if tutorial.user.photo_set.all|length == 0 %}
+              <div class="material-icons">
+                  <i class="material-icons circle blue center no-tut-pic">person</i>
+              </div>
+            {% else %}
+              <img src="{{photo.url}}" alt="">  
+            {% endif %}                  
             {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
           </div>
           {% if user.id == tutorial.user.id %}

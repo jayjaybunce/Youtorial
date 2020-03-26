@@ -23,7 +23,7 @@
                           <div class="input-field col s6 s12">
                             <form action="{% url 'search' %}" method="GET">
                               <i class="material-icons prefix">search</i>
-                              <input type="text" name="q" placeholder="search" id="autocomplete-input" class="autocomplete white-text" value="{{request.GET.query}}">
+                              <input type="text" name="search_query" placeholder="search" id="autocomplete-input" class="autocomplete white-text" value="{{request.GET.query}}">
                             </form>
                           </div>
                         </div>
