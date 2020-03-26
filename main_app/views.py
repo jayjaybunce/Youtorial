@@ -1,16 +1,14 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
-
-from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.search import SearchVector
 from .utils import get_url_list
 from .forms import TutorialForm
 from .models import Photo, Category, Tutorial, Video, Status, Comment
 from django.http import HttpResponse
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 import uuid
 import boto3
 
@@ -52,7 +50,7 @@ def user_profile(request):
 
 def tutorials(request, category_name):
     category = Category.objects.get(name=category_name)
-    tutorials = Tutorial.objects.filter(category=category.id)
+    tutorials = Tutorial.objects.filter(category=category.id).order_by('title')
     try:
         photo = Photo.objects.get(user_id=request.user.id)
     except Photo.DoesNotExist:
@@ -164,7 +162,7 @@ def tutorial_detail(request, tutorial_id):
 
 
 def categories(request):
-    categories = Category.objects.all()
+    categories = Category.objects.all().order_by('name')
     context = {
         'urls': get_url_list(request),
         'title': 'Categories',
@@ -342,7 +340,26 @@ def add_category(request):
     category.save()
     return redirect(prev_url)
     
+def search(request):
+    tutorials = Tutorial.objects.annotate(
+        search=SearchVector('id', 'content', 'category', 'user', 'title'),
+        ).filter(search=request.GET['search_query']).order_by('title')
+    all_stats = Status.objects.all()
+    for tut in tutorials:
+        tut.stats = []
+        tut_stats = all_stats.filter(tutorial_id=tut.id)
+        for stat in tut_stats:
+            tut.stats.append(stat.user)
 
+        for t in tutorials:
+            try:
+                p = Photo.objects.get(user_id=t.user.id)
+                t.user_url = p.url
+            except Photo.DoesNotExist:
+                p = None
+    print('search: ', tutorials)
+
+    return render(request, 'main_app/search.html', {'tutorials': tutorials})
 
 
 
