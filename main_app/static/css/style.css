@@ -49,6 +49,10 @@ main {
   margin: 1px 10px 0 -11px;
 }
 
+.tutlist-nopic-name {
+  margin-bottom: 10px;
+}
+
 .pic-position {
   padding: 20px 0 20px 0;
   width: 100%;

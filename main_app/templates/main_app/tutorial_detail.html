@@ -176,7 +176,7 @@
 
                       <i class="material-icons circle blue center" id="blank_chip">person</i>
                     {% endif %}
-                    {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
+                    {{ tutorial.user.username}}
                   </div>
                     {% if user.id == tutorial.user.id %}
                     
@@ -297,11 +297,11 @@
             <div class="chip">
               {% if comment.user_url %}
                 <img src="{{comment.user_url}}">
-                {{ comment.user.first_name }} {{ comment.user.last_name }} 
+                {{ comment.user.username }}
               {% else %}
                 
                   <i class="material-icons circle blue center" id="blank_chip">person</i>
-                  {{comment.user.first_name}} {{comment.user.last_name}}
+                  {{comment.user.username}}
               {% endif %}
             </div>
           {{ comment.content }}

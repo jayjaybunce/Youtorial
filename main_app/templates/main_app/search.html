@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <h2 class="center">{{category.name}}</h2>
+    <h2 class="center">Search Results for "{{ request.GET.search_query }}"</h2>
     <div class="row">
         {% for t in tutorials %}
             <div class="col s12 m6 l4">

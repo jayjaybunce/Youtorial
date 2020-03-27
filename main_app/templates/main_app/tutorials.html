@@ -16,17 +16,16 @@
                                 <div class="material-icons">
                                     <i class="material-icons circle blue center no-tut-pic">person</i>
                                 </div>
+                                {{ t.user }}
                             {% else %}
                                 <img src="{{t.user_url}}">
+                                {{ t.user }}
                             {% endif %}
-                            {{ t.user }}
                         </div>
                         {% if t.avg_rating %}
                             <span style="margin: 0 auto;">Rating: {{ t.avg_rating}}</span>
-                        {% endif %}
-                        
+                        {% endif %}  
                     </div>
-                    
                     <div class="card-action">
                         <a href="{% url 'detail' t.id%}" class="btn waves-effect waves-light">View Tutorial</a>
                         {% if user.id == t.user.id %} 
@@ -41,8 +40,7 @@
                             <div class="right">
                                 <a href="{% url 'save_tutorial' t.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
                             </div>
-                        {% endif %}
-                        
+                        {% endif %}   
                     </div>
                 </div>
             </div>
@@ -53,6 +51,5 @@
             var elems = document.querySelectorAll('.tooltipped');
             var instances = M.Tooltip.init(elems);
         });
-    
     </script>
 {% endblock  %}
