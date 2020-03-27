@@ -42,5 +42,11 @@
     </div>
         {% endfor %}
     </div>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.tooltipped');
+            var instances = M.Tooltip.init(elems);
+        });
     
+    </script>
 {% endblock  %}
