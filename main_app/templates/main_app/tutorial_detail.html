@@ -1,5 +1,4 @@
 {% extends 'base_min.html' %}
-
 {% block content %}
     <h2 class="center">{{ tutorial.title }}</h2>
     {% if tutorial.video_url %}
@@ -12,10 +11,9 @@
                 </div>
                 {% else %}
                 <video id="video_player" class="responsive-video" controls>
-                          <source src="{{ tutorial.video_url }}" type="video/mp4">
-                          <source src="{{ tutorial.video_url }}" type="video/ogg">
-                        Your browser does not support the video tag.
-                        </video> {% endif %}
+                  <source src="{{ tutorial.video_url }}" type="video/mp4">
+                  <source src="{{ tutorial.video_url }}" type="video/ogg">
+                </video> {% endif %}
     </div>
       <div class="col l6 s12 left">
         <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
@@ -28,40 +26,28 @@
               <img src="{{photo.url}}" alt="">  
             {% endif %}                  
             {{ tutorial.user }} 
-                  </div>                  
-                  
+          </div>                  
                    {% if user.id == tutorial.user.id %}
-                  
                   <div class="right">
                     <a href="" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
                   </div>
-                  
                   {% elif user in stats %}
-
                   <div class="right">
                     <a href="{% url 'unsave_tutorial' tutorial.id%}" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
                   </div>
-                  
-                  
                   {% else %}
                   <div class="right">
                     <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
                   </div>
-
-
-
                   {% endif %}
-                  
-                 
                 <hr>
                 <div id="rating_wrapper">
-                  
                     <div class="showcase">
                       Rating:
                       <div class="rating-system2">
                         <form action="{% url 'add_rating' tutorial.id%}" method="POST">
                           {% csrf_token %}
-                        {% if user_has_rated %}
+                          {% if user_has_rated %}
                           <fieldset class="rating_fieldset" disabled="disabled">
                             <input type="submit" name='5' id="star5_2" />
                             <label for="star5_2" {% if user_has_rated.value >= 5%}class="checked"{% endif %}></label>
@@ -73,20 +59,20 @@
                             <label for="star2_2" {% if user_has_rated.value >= 2%}class="checked"{% endif %}></label>
                             <input type="submit" name='1'id="star1_2" />
                             <label for="star1_2" {% if user_has_rated.value >= 1%}class="checked"{% endif %}></label>
-                        {% elif tutorial.user == user%}
-                          <a class="tooltipped" data-position="right" data-tooltip="You can't rate your own content">
-                            <fieldset class="rating_fieldset tooltipped" disabled="disabled">    
-                              <input type="submit" name='5' id="star5_2" />
-                              <label for="star5_2"></label>
-                              <input type="submit" name='4' id="star4_2" />
-                              <label for="star4_2"></label>
-                              <input type="submit" name='3' id="star3_2" />
-                              <label for="star3_2"></label>
-                              <input type="submit" name='2' id="star2_2" />
-                              <label for="star2_2"></label>
-                              <input type="submit" name='1'id="star1_2" />
-                              <label for="star1_2"></label>
-                          </a>
+                          {% elif tutorial.user == user%}
+                            <a class="tooltipped" data-position="right" data-tooltip="You can't rate your own content">
+                              <fieldset class="rating_fieldset tooltipped" disabled="disabled">    
+                                <input type="submit" name='5' id="star5_2" />
+                                <label for="star5_2"></label>
+                                <input type="submit" name='4' id="star4_2" />
+                                <label for="star4_2"></label>
+                                <input type="submit" name='3' id="star3_2" />
+                                <label for="star3_2"></label>
+                                <input type="submit" name='2' id="star2_2" />
+                                <label for="star2_2"></label>
+                                <input type="submit" name='1'id="star1_2" />
+                                <label for="star1_2"></label>
+                            </a>
                         {% else %}
                           <fieldset class="rating_fieldset">    
                             <input type="submit" name='5' id="star5_2" />
@@ -99,13 +85,8 @@
                             <label for="star2_2"></label>
                             <input type="submit" name='1'id="star1_2" />
                             <label for="star1_2"></label>
-                          
                         {% endif %}
-                      
                         </fieldset>
-                        
-                          
-
                         </form>
                       </div>
                       <strong>{{ tutorial.avg_rating }}</strong>
@@ -128,11 +109,8 @@
                 <div id="tutorial_content" class="s12">
                   <p class="textwrap" style="word-wrap: break-word;"> {{ tutorial.content | safe}}</p>
                 </div>
-                
               </div>
           </div>
-          
-          
     </div>
     <div class="row" id="comment_row">
       <div class="col l6 s12 right">
@@ -145,7 +123,6 @@
             </form>
           </div>
         </div>
-      
       <div class="col l12 s12 right" id="comments_container">
         {% for comment in comments %}
           <div class="card comment_card" >
@@ -153,8 +130,7 @@
               {% if comment.user_url %}
                 <img src="{{comment.user_url}}">
                 {{ comment.user }}
-              {% else %}
-                
+              {% else %}  
                   <i class="material-icons circle blue center" id="blank_chip">person</i>
                   {{ comment.user }}
               {% endif %}
@@ -164,7 +140,6 @@
         {% endfor %}
       </div>
     </div>
-    
     {% else %}
     <div class="row">
       <div class="col l6 left">
@@ -173,39 +148,27 @@
                     {% if photo.url %}
                       <img src="{{photo.url}}" alt="">
                     {% else %}
-
                       <i class="material-icons circle blue center" id="blank_chip">person</i>
                     {% endif %}
                     {{ tutorial.user}} 
                   </div>
                     {% if user.id == tutorial.user.id %}
-                    
                     <div class="right">
                       <a href="" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
                     </div>
-                    
                     {% elif user in stats %}
-
                     <div class="right">
                       <a href="{% url 'unsave_tutorial' tutorial.id%}" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
                     </div>
-                    
-                    
                     {% else %}
                     <div class="right">
                       <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
                     </div>
-
-
-
                     {% endif %}
-                    
                 <hr>
                  <div id="rating_wrapper">
-                  
                     <div class="showcase">
                       Rating:
-                      
                       <div class="rating-system2">
                         <form action="{% url 'add_rating' tutorial.id%}" method="POST">
                           {% csrf_token %}
@@ -247,20 +210,13 @@
                             <label for="star2_2"></label>
                             <input type="submit" name='1'id="star1_2" />
                             <label for="star1_2"></label>
-                          
                         {% endif %}
-                        
                         </fieldset>
-                        
-
                         </form>
-                        
                       </div>
                     </div>
                     <strong>{{ tutorial.avg_rating }}</strong>
-                    
                   </div>
-                  
                 {% if user.id == tutorial.user.id%}      
                       <div class="right">
                         <a href="#" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Thanks For Creating This Tutorial"><i class="material-icons">check_circle</i></a>
@@ -299,7 +255,6 @@
                 <img src="{{comment.user_url}}">
                   {{ comment.user }}
               {% else %}
-                
                   <i class="material-icons circle blue center" id="blank_chip">person</i>
                   {{ comment.user }}
               {% endif %}
@@ -310,17 +265,12 @@
         </div>
       </div>
     </div>
-    
-  
     </div>
-    
-    
     {% endif %} 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         var elems = document.querySelectorAll('.tooltipped');
         var instances = M.Tooltip.init(elems);
       });
-  
     </script>
 {% endblock  %}

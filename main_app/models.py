@@ -4,10 +4,6 @@ from django.contrib.auth.models import User
 from tinymce.widgets import TinyMCE
 from datetime import datetime
 
-
-
-
-
 class Category(models.Model):
     name = models.CharField(max_length=200)
     photo_url = models.CharField(max_length=200)
@@ -29,13 +25,10 @@ class Tutorial(models.Model):
     def __save__(self, *args, **kwargs):
         if self.published == None:
             self.published = timezone.now()
-
         return super(Tutorial, self).save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.user}, {self.title}'
-
-
 
 class Status(models.Model):
     level_status = (
@@ -47,10 +40,8 @@ class Status(models.Model):
     saved = models.DateTimeField("date saved", default=datetime.now())
     user = models.ForeignKey(User, on_delete=models.PROTECT)
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
-
     def __str__(self):
         return self.stats
-
 
 class Comment(models.Model):
     content = models.TextField()
@@ -66,7 +57,6 @@ class Photo(models.Model):
 class Video(models.Model):
     url = models.CharField(max_length=200,default='')
     tutorial = models.ForeignKey(Tutorial, on_delete=models.CASCADE)
-
 
 class Rating(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

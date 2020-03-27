@@ -13,16 +13,9 @@ from django.http import HttpResponse
 import uuid
 import boto3
 
-
-
-
-
-
 S3_BASE_URL = 'https://s3-us-east-2.amazonaws.com/'
 BUCKET = 'youtorial'
 
-
-# Create your views here.
 def homepage(request):
     context = {
         'urls': get_url_list(request),
@@ -43,7 +36,6 @@ def user_profile(request):
         for rating in tutorial.ratings:
             avg_rating['count'] += 1
             avg_rating['sum'] += rating.value
-
     try:
         request.user.avg_rating = avg_rating['sum']/avg_rating['count']
     except ZeroDivisionError:
@@ -78,7 +70,6 @@ def tutorials(request, category_name):
         tut_stats = all_stats.filter(tutorial_id=tut.id,stats='S')
         for stat in tut_stats:
             tut.stats.append(stat.user)
-
         for t in tutorials:
             try:
                 p = Photo.objects.get(user_id=t.user.id)
@@ -106,12 +97,8 @@ def new_tutorial(request):
             try:
                 s3.upload_fileobj(video_file, BUCKET, key)
                 url = f"{S3_BASE_URL}{BUCKET}/{key}"
-                
-                # video = Video(url=url, tutorial_id=tutorial_id)
-                # video.save()
             except:
                 print('An error occured uploding file e to S3')
-    # return redirect('tutorials')
         if request.POST['video_url']:
             v_url = request.POST['video_url']
             if 'youtube' in v_url:
@@ -120,7 +107,6 @@ def new_tutorial(request):
                         v_url = v_url[index+1:]
                         print(v_url)
                         break
-
             url = f'https://youtube.com/embed/{v_url}'
         print(url)
         tut_form = TutorialForm(request.POST)
@@ -149,13 +135,11 @@ def tutorial_detail(request, tutorial_id):
 
     except:
         user_has_rated = None
-    
     for comment in comments:
         try:
             comment.user_url = Photo.objects.get(user_id=comment.user).url
         except Photo.DoesNotExist:
             comment.user_url = None
-
     stats_list = []
     completed_list = []
     try:
@@ -186,15 +170,12 @@ def tutorial_detail(request, tutorial_id):
     print(f"This is the tutorial: {tutorial}")
     return render(request, 'main_app/tutorial_detail.html', context)
 
-
-
 def categories(request):
     categories = Category.objects.all().order_by('name')
     context = {
         'urls': get_url_list(request),
         'title': 'Categories',
         'categories': categories,
-        
     }
     return render(request, 'main_app/categories.html' , context)
 
@@ -210,7 +191,6 @@ def sign_up(request):
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
     form = UserCreationForm(request.POST)
-    
     if form.is_valid():
         user = form.save(commit=False)
         user.first_name = first_name
@@ -220,17 +200,12 @@ def sign_up(request):
         request.session['error_message_signup'] = ''
         login(request, user)
         return redirect('homepage')
-   
-        
-    
     request.session['error_message_signup'] = form.errors
     return redirect('homepage')
-
 
 @login_required
 def add_photo(request, user_id):
     photo_file = request.FILES.get('photo-file', None) 
-    
     try:
         photo = Photo.objects.get(user=request.user)
     except:
@@ -251,7 +226,6 @@ def add_photo(request, user_id):
 
 @login_required
 def edit_tutorial(request, tutorial_id):
-    
     tutorial = Tutorial.objects.get(id=tutorial_id)
     if request.method == 'POST':
         video_file = request.FILES.get('video')
@@ -262,11 +236,8 @@ def edit_tutorial(request, tutorial_id):
                 s3.upload_fileobj(video_file, BUCKET, key)
                 url = f"{S3_BASE_URL}{BUCKET}/{key}"
                 tutorial.video_url = url
-                # video = Video(url=url, tutorial_id=tutorial_id)
-                # video.save()
             except:
                 print('An error occured uploding file e to S3')
-    # return redirect('tutorials')
         if request.POST['video_url'] != '':
             v_url = request.POST['video_url']
             if 'youtube' in v_url:
@@ -278,9 +249,6 @@ def edit_tutorial(request, tutorial_id):
                 url = f'https://youtube.com/embed/{v_url}'
             else:
                 url = request.POST['video_url']
-            
-                          
-
         if not request.FILES and not request.POST['video_url']:
             url = ''
         tutorial.video_url = url
@@ -301,7 +269,6 @@ def edit_tutorial(request, tutorial_id):
     }
     return render(request, 'main_app/edit_tutorial.html', context)
 
-
 @login_required
 def delete_tutorial(request, tutorial_id):
     Tutorial.objects.get(id=tutorial_id).delete()
@@ -309,7 +276,6 @@ def delete_tutorial(request, tutorial_id):
     
 def saved_tutorials(request):
     stats = Status.objects.all()
-    
     context = {'stats': stats}
     return render(request, 'main_app/saved_tutorials.html', context)
 
@@ -353,9 +319,7 @@ def add_comment(request, tutorial_id):
 def add_category(request):
     prev_url = request.META.get('HTTP_REFERER')
     cat_name = request.POST['name']
-    
     cat_photo_file = request.FILES.get('photo_url',None)
-    
     url = ''
     print('url before upload',url)
     if cat_photo_file:
@@ -373,7 +337,6 @@ def add_category(request):
 @login_required
 def add_rating(request, tutorial_id):
     prev_url = request.META.get('HTTP_REFERER')
-
     value_list = request.POST.keys()
     value = list(value_list)[1]
     print(request.POST)
@@ -381,8 +344,6 @@ def add_rating(request, tutorial_id):
     rating = Rating(user=request.user,tutorial_id=tutorial.id,value=value)
     rating.save()
     return redirect(prev_url)
-
-
     
 def search(request):
     tutorials = Tutorial.objects.annotate(
@@ -394,7 +355,6 @@ def search(request):
         tut_stats = all_stats.filter(tutorial_id=tut.id)
         for stat in tut_stats:
             tut.stats.append(stat.user)
-
         for t in tutorials:
             try:
                 p = Photo.objects.get(user_id=t.user.id)
@@ -402,35 +362,4 @@ def search(request):
             except Photo.DoesNotExist:
                 p = None
     print('search: ', tutorials)
-
     return render(request, 'main_app/search.html', {'tutorials': tutorials})
-
-
-
-
-
-
-
-
-
-    
-# def add_video(request, tutorial_id):
-#     video_file = request.FILES.get('video-file', None)
-#     if video_file:
-#         s3 = boto3.client('s3')
-#         key = uuid.uuid4().hex[:6] + video_file.name[video_file.name.rfind('.'):]
-#         try:
-#             s3.upload_fileobj(video_file, BUCKET, key)
-#             url = f"{S3_BASE_URL}{BUCKET}/{key}"
-#             video = Video(url=url, tutorial_id=tutorial_id)
-#             video.save()
-#         except:
-#             print('An error occured uploding file e to S3')
-#     return redirect('tutorials')
-    
-
-
-
-
-
-

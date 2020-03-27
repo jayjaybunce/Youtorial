@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
-
 {% block content %}
-
-    
     <br>
     <main class="container">
         <div class="row">
@@ -25,22 +22,21 @@
             {% if not user.is_authenticated %}
             <div class="col s5">
                 <div class="col s10">
-                <h2>Login</h2>
-                <p style="color: red">{{ error_message }}</p>
-                <form action="/accounts/login/" method="POST">
+                    <h2>Login</h2>
+                    <p style="color: red">{{ error_message }}</p>
+                    <form action="/accounts/login/" method="POST">
                         {% csrf_token %}
                         {{ form.as_p }}
                         <input type="submit" value="Login" class="btn col s12 light-blue darken-1">
                     </form>
-                    
                 </div>
             </div>
             <div class="right col s5">
                 <div class="col s10">
                 <h2>Sign-Up</h2>
-                {% for error in request.session.error_message_signup.values %}
-                    <p style="color: red">{{ error }}</p>
-                {% endfor %}
+                    {% for error in request.session.error_message_signup.values %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
                 <p style="color: red"></p>
                     <form action="{% url 'signup'%}" method="POST">
                         {% csrf_token %}
@@ -57,8 +53,6 @@
                         <label for="password2">Confirm Password:</label>
                         <input type="password" name="password2" placeholder="Confirm Password">
                         <input type="submit" value="Sign Up" class="btn col s12 light-blue darken-1">
-                        
-                        
                     </form>
                 </div>
             </div>

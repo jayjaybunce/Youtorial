@@ -6,10 +6,8 @@ def get_url_list(request):
             urls.append(url.capitalize())
     
     return urls
-
-
-def get_average(ratings):
     
+def get_average(ratings):
     try:
         count = 0
         sum_ratings = 0

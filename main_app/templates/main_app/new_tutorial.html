@@ -1,10 +1,6 @@
 {% extends 'base_min.html' %}
-
-
 {% block content %}
-
     <div class="container">
-     
         <h3 id="tutorial_title">Title Here</h3>
             <br>
             <br>
@@ -19,10 +15,7 @@
             </form>
     </div>
     </div>
-
-
     {% load static %}
-   
     <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
     <script>
     tinymce.init({
@@ -49,5 +42,4 @@
         spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
     });
     </script>
-   
 {% endblock  %}

@@ -1,8 +1,5 @@
 {% extends 'base_min.html' %}
-
-
 {% block content %}
-
     <div class="container">
     <h3 id="tutorial_title">{{tutorial.title}}</h3>
     <br>
@@ -11,14 +8,10 @@
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p}}
-        
-
         <input type="submit" class="btn">
     </form>
         </div>
-
     {% load static %}
-   
     <script src="{% static 'tinymce/js/tinymce/tinymce.min.js'%}"></script>
     <script>
     tinyMCE.init({
@@ -31,7 +24,6 @@
     directionality: "{{ directionality }}",
     spellchecker_languages : "{{ spellchecker_languages }}",
     spellchecker_rpc_url : "{{ spellchecker_rpc_url }}"
-});
+    });
     </script>
-   
 {% endblock  %}
