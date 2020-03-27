@@ -16,43 +16,7 @@
                           <source src="{{ tutorial.video_url }}" type="video/ogg">
                         Your browser does not support the video tag.
                         </video> {% endif %}
-
     </div>
-
-    <div class="col l6 s12 left">
-        <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
-            <div class="chip">
-                <img src="{{photo.url}}" alt=""> {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
-            </div>
-            {% if user.id == tutorial.user.id %}
-
-            <div class="right">
-                <a href="" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="You can't save this!"><i class="material-icons">favorite</i></a>
-            </div>
-
-            {% elif user in stats %}
-
-            <div class="right">
-                <a href="{% url 'unsave_tutorial' tutorial.id%}" class="btn-floating grey right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Unsave This!"><i class="material-icons">favorite</i></a>
-            </div>
-
-
-            {% else %}
-            <div class="right">
-                <a href="{% url 'save_tutorial' tutorial.id%}" class="btn-floating pink right waves-effect waves-light tooltipped" data-position="left" data-tooltip="Save For Later"><i class="material-icons">favorite</i></a>
-            </div>
-
-
-
-            {% endif %}
-
-            <hr>
-            <div id="tutorial_content">
-                <p class="textwrap" style="word-wrap: break-word;"> {{ tutorial.content | safe}}</p>
-            </div>
-
-        </div>
-        
       <div class="col l6 s12 left">
         <div class="card-content" style="max-height: 800px" overflow-y: scroll;>
           <div class="chip">
@@ -96,7 +60,7 @@
                       Rating:
                       <div class="rating-system2">
                         <form action="{% url 'add_rating' tutorial.id%}" method="POST">
-
+                          {% csrf_token %}
                         {% if user_has_rated %}
                           <fieldset class="rating_fieldset" disabled="disabled">
                             <input type="submit" name='5' id="star5_2" />
@@ -142,7 +106,7 @@
                         
                           
 
-                        <form>
+                        </form>
                       </div>
                       <strong>{{ tutorial.avg_rating }}</strong>
                     </div>
@@ -181,6 +145,7 @@
             </form>
           </div>
         </div>
+      
       <div class="col l12 s12 right" id="comments_container">
         {% for comment in comments %}
           <div class="card comment_card" >
@@ -213,13 +178,6 @@
                     {% endif %}
                     {{ tutorial.user.first_name}} {{tutorial.user.last_name}}
                   </div>
-
-                 
-                  
-                
-                  
-                  
-                
                     {% if user.id == tutorial.user.id %}
                     
                     <div class="right">
@@ -250,7 +208,7 @@
                       
                       <div class="rating-system2">
                         <form action="{% url 'add_rating' tutorial.id%}" method="POST">
-
+                          {% csrf_token %}
                         {% if user_has_rated %}
                           <fieldset class="rating_fieldset" disabled="disabled">
                             <input type="submit" name='5' id="star5_2" />
@@ -295,7 +253,7 @@
                         </fieldset>
                         
 
-                        <form>
+                        </form>
                         
                       </div>
                     </div>
