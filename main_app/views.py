@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.postgres.search import SearchVector
+import urllib
 from .utils import get_url_list, get_average
 from .forms import TutorialForm
 from .models import Photo, Category, Tutorial, Video, Status, Comment, Rating
@@ -209,21 +210,21 @@ def sign_up(request):
     first_name = request.POST['first_name']
     last_name = request.POST['last_name']
     form = UserCreationForm(request.POST)
+    
     if form.is_valid():
         user = form.save(commit=False)
         user.first_name = first_name
         user.last_name = last_name
         user.email = email
         user.save()
+        request.session['error_message_signup'] = ''
         login(request, user)
         return redirect('homepage')
-    else: 
-        error_message_signup = 'Invalid signup - try again'
-    context = {
-        'error_message_signup': error_message_signup,
-    }
+   
+        
+    
+    request.session['error_message_signup'] = form.errors
     return redirect('homepage')
-
 
 
 @login_required

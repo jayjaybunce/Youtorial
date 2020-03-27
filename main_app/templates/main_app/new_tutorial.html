@@ -12,6 +12,7 @@
             <form action="{% url 'new_tutorial'%}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p}}
+                <p> If uploading a video, we can only accept and show .mp4 formats</p>
                 <a onclick="M.toast({html: 'Thanks For Creating A Tutorial!!',  inDuration: 1000, displayLength: 3000, outDuration: 1000})" class="rounded">
                     <input type="submit" class="btn">
                 </a>

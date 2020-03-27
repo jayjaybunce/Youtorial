@@ -38,10 +38,13 @@
             <div class="right col s5">
                 <div class="col s10">
                 <h2>Sign-Up</h2>
-                <p style="color: red">{{ error_message_signup }}</p>
+                {% for error in request.session.error_message_signup.values %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+                <p style="color: red"></p>
                     <form action="{% url 'signup'%}" method="POST">
                         {% csrf_token %}
-                        <label for="username">Username:</label>
+                        <label for="username">Username: (No Spaces)</label>
                         <input name="username" type="text" placeholder="Username">
                         <label for="email">Email Address:</label>
                         <input name="email" type="text" placeholder="Email">
