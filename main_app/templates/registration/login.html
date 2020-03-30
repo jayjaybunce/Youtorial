@@ -59,6 +59,8 @@
             {% else %}
                 Logged in as {{ user.first_name }} {{user.last_name}}
             {% endif %}
+            
+            
         </div>
         <br>
         <br>
@@ -69,5 +71,10 @@
         <br>
         <br>
         <br>
+        {% if request.session.success_signup %}
+            <script>
+                M.toast({html: 'Account created, we logged you in!',  inDuration: 1000, displayLength: 3000, outDuration: 1000}); 
+            </script>
+        {% endif %}
     </main>
 {% endblock  %}

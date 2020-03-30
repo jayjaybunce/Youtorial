@@ -198,6 +198,7 @@ def sign_up(request):
         user.email = email
         user.save()
         request.session['error_message_signup'] = ''
+        request.session['success_signup'] = f'Thanks for signing up! Logged in as {user.username}'
         login(request, user)
         return redirect('homepage')
     request.session['error_message_signup'] = form.errors
