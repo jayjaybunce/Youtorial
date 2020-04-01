@@ -19,9 +19,13 @@ For this project, technologies implemented are:
 [x] Python
 [x] Amazon Web Services
 
-
-#  Entity Relationship Diagram
-![Image](https://i.imgur.com/cDRy5iU.jpg)
+# Planned Future Enhancements
+    Improve upload process with upload progress bar.
+    Add materialize toasts for user actions:
+        - Creating a tutorial
+        - Uploading a profile photo
+        - Creating a category
+    
 
 
 # Navigation
